@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: OnlineShop
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: 'TRUE'
+    hibernate:
+      ddl-auto: update
+    open-in-view: 'false'
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: 'true'
+  sql:
+    init:
+      mode: never
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: ${db_username}
+    password: ${db_password}
+    url: jdbc:mysql://localhost:3306/perfumes_shop?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC
+logging:
+  level:
+    org:
+      hibernate:
+        type:
+          descriptor: TRACE
+        SQL: DEBUG
+      nodeValue: WARN
+    blog: WARN
+server:
+  port: 8080
+
+
+

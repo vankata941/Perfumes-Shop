@@ -24,6 +24,9 @@ public class User extends BaseEntity {
     @Column(unique = true, nullable = false)
     private String email;
 
+    @ManyToOne(optional = false)
+    private Role role;
+
     @OneToMany(mappedBy = "user")
     private List<Customer> customers = new ArrayList<>();
 }

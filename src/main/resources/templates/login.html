@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto">
+<head th:replace="~{commons/head::head}"></head>
+<body>
+
+<header th:replace="~{commons/header::header}"></header>
+
+<div class="container">
+<main class="form-signin w-100 m-auto">
+  <form>
+    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+
+    <div class="form-floating mb-3">
+      <input type="text" class="form-control" id="floatingUsername" placeholder="Username">
+      <label for="floatingUsername">Username</label>
+    </div>
+    <div class="form-floating mb-3">
+      <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+      <label for="floatingPassword">Password</label>
+    </div>
+
+    <div class="form-check text-start mb-3">
+      <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
+      <label class="form-check-label" for="flexCheckDefault">
+        Remember me
+      </label>
+    </div>
+    <button class="btn btn-primary w-100 py-2" type="submit">Sign in</button>
+    <div class="text-center mt-3">
+      <span>You don't have an account?</span>
+      <a href="#" class="link-primary">Register</a>
+    </div>
+  </form>
+
+</main>
+</div>
+    </body>
+</html>

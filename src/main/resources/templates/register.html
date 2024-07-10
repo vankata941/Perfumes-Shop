@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto">
+
+<head th:replace="~{commons/head::head}"></head>
+
+  <body>
+  <header th:replace="~{commons/header::header}"></header>
+<div class="container">
+    <main class="form-signin w-100 m-auto">
+        <form
+            th:object="${registerData}"
+            th:action="@{/users/rigister}"
+            th:method="POST"
+        >
+            <h1 class="h3 mb-3 fw-normal">Register</h1>
+
+            <div class="form-floating mb-3">
+                <input
+                        th:field="*{username}"
+                        name="username"
+                        type="text"
+                        class="form-control"
+                        id="floatingUsername"
+                        placeholder="Username"
+                >
+                <label for="floatingUsername">Username</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input
+                        th:field="*{email}"
+                        name="email"
+                        type="email"
+                        class="form-control"
+                        id="floatingEmail"
+                        placeholder="Email"
+                >
+                <label for="floatingEmail">Email</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input
+                        name="password"
+                        type="password"
+                        class="form-control"
+                        id="floatingPassword"
+                        placeholder="Password"
+                >
+                <label for="floatingPassword">Password</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input
+                        name="confirmPassword"
+                        type="password"
+                        class="form-control"
+                        id="floatingConfirmPassword"
+                        placeholder="Confirm Password"
+                >
+                <label for="floatingConfirmPassword">Confirm Password</label>
+            </div>
+
+            <button class="btn btn-primary w-100 py-2" type="submit">Register</button>
+            
+            <div class="text-center mt-3">
+                <span>Already have an account? </span>
+                <a href="#" class="link-primary">Login</a>
+            </div>
+        </form>
+    </main>
+</div>
+</body>
+</html>

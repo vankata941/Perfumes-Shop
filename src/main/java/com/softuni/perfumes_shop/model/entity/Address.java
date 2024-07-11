@@ -27,7 +27,7 @@ public class Address extends BaseEntity {
     @Column(nullable = false)
     private String postalCode;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Customer customer;
 }
 

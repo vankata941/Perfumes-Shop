@@ -16,10 +16,10 @@ import java.util.List;
 @Table(name = "orders")
 public class Order extends BaseEntity {
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Customer customer;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Address address;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)

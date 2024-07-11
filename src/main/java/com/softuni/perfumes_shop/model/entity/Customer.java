@@ -21,7 +21,7 @@ public class Customer extends BaseEntity {
     @Column(nullable = false)
     private String lastName;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     private User user;
 
     @OneToMany(mappedBy = "customer")
@@ -30,7 +30,7 @@ public class Customer extends BaseEntity {
     @OneToMany(mappedBy = "customer")
     private List<Order> orders = new ArrayList<>();
 
-    @OneToOne(optional = false)
+    @OneToOne
     private Cart cart;
 
     @Column(nullable = false)

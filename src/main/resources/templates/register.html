@@ -1,5 +1,7 @@
 <!doctype html>
-<html lang="en" data-bs-theme="auto">
+<html lang="en" data-bs-theme="auto"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="~{commons/head::head}"></head>
 
@@ -9,51 +11,86 @@
     <main class="form-signin w-100 m-auto">
         <form
             th:object="${registerData}"
-            th:action="@{/users/rigister}"
+            th:action="@{/users/register}"
             th:method="POST"
         >
             <h1 class="h3 mb-3 fw-normal">Register</h1>
-
+            <div class="text-danger mb-2" style="font-size: 15px" th:if="${usernameOrEmailTaken}" th:text="'Username or email address already in use!'"></div>
+            <div class="text-danger mb-2" style="font-size: 15px" th:if="${passwordMismatch}" th:text="'Password and confirm password should be the same!'"></div>
             <div class="form-floating mb-3">
                 <input
                         th:field="*{username}"
+                        th:errorclass="is-invalid"
                         name="username"
                         type="text"
                         class="form-control"
                         id="floatingUsername"
                         placeholder="Username"
                 >
+                <small class="invalid-feedback danger" style="font-size: 15px">Username length must be between 3 and 20 characters!</small>
                 <label for="floatingUsername">Username</label>
             </div>
             <div class="form-floating mb-3">
                 <input
+                        th:field="*{firstName}"
+                        th:errorclass="is-invalid"
+                        name="firstName"
+                        type="text"
+                        class="form-control"
+                        id="floatingFirstName"
+                        placeholder="First name"
+                >
+                <small class="invalid-feedback danger" style="font-size: 15px">First name length must be between 2 and 20 characters!</small>
+                <label for="floatingFirstName">First name</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input
+                        th:field="*{lastName}"
+                        th:errorclass="is-invalid"
+                        name="lastName"
+                        type="text"
+                        class="form-control"
+                        id="floatingLastName"
+                        placeholder="Last name"
+                >
+                <small class="invalid-feedback danger" style="font-size: 15px">Last name length must be between 2 and 20 characters!</small>
+                <label for="floatingLastName">Last name</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input
                         th:field="*{email}"
+                        th:errorclass="is-invalid"
                         name="email"
                         type="email"
                         class="form-control"
                         id="floatingEmail"
                         placeholder="Email"
                 >
+                <small class="invalid-feedback danger">Please enter valid email!</small>
                 <label for="floatingEmail">Email</label>
             </div>
             <div class="form-floating mb-3">
                 <input
+                        th:errorclass="is-invalid"
                         name="password"
                         type="password"
                         class="form-control"
                         id="floatingPassword"
                         placeholder="Password"
                 >
+                <small class="invalid-feedback danger">Password length must be between 8 and 20 characters!</small>
                 <label for="floatingPassword">Password</label>
             </div>
             <div class="form-floating mb-3">
                 <input
+                        th:errorclass="is-invalid"
                         name="confirmPassword"
                         type="password"
                         class="form-control"
                         id="floatingConfirmPassword"
                         placeholder="Confirm Password"
                 >
+                <small class="invalid-feedback danger">Password length must be between 8 and 20 characters!</small>
                 <label for="floatingConfirmPassword">Confirm Password</label>
             </div>
 
@@ -61,7 +98,7 @@
             
             <div class="text-center mt-3">
                 <span>Already have an account? </span>
-                <a href="#" class="link-primary">Login</a>
+                <a th:href="@{/users/login}" class="link-primary">Login</a>
             </div>
         </form>
     </main>

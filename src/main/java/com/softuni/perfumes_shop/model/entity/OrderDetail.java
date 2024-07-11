@@ -15,10 +15,10 @@ import lombok.Setter;
 @Table(name = "order_details")
 public class OrderDetail extends BaseEntity {
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Order order;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Product product;
 
     @Column(nullable = false)

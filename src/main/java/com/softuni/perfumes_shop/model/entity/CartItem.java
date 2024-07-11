@@ -15,10 +15,10 @@ import lombok.Setter;
 @Table(name = "cart_items")
 public class CartItem extends BaseEntity {
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Cart cart;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Product product;
 
     @Column

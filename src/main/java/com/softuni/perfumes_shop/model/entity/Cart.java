@@ -16,7 +16,7 @@ import java.util.List;
 @Table(name = "carts")
 public class Cart extends BaseEntity {
 
-    @OneToOne(optional = false)
+    @OneToOne
     private Customer customer;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)

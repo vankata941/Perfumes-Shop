@@ -16,16 +16,24 @@ public class UserRegisterDTO {
     @Size(min = 3, max = 20)
     private String username;
 
+    @NotBlank
+    @Size(min = 2, max = 20)
+    private String firstName;
+
+    @NotBlank
+    @Size(min = 2, max = 20)
+    private String lastName;
+
     @Email
     @NotBlank
     private String email;
 
     @NotBlank
-    @Size(min = 3, max = 20)
+    @Size(min = 8, max = 20)
     private String password;
 
     @NotBlank
-    @Size(min = 3, max = 20)
+    @Size(min = 8, max = 20)
     private String confirmPassword;
 
 }

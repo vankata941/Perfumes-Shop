@@ -1,5 +1,6 @@
 package com.softuni.perfumes_shop.model.entity;
 
+import com.softuni.perfumes_shop.model.enums.PerfumeType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

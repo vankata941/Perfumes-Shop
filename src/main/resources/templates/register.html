@@ -1,14 +1,16 @@
 <!doctype html>
 <html lang="en" data-bs-theme="auto"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+>
 
 <head th:replace="~{commons/head::head}"></head>
 
   <body>
   <header th:replace="~{commons/header::header}"></header>
 <div class="container">
-    <main class="form-signin w-100 m-auto">
+    <main class="form-field w-100 m-auto">
         <form
             th:object="${registerData}"
             th:action="@{/users/register}"
@@ -26,6 +28,9 @@
                         class="form-control"
                         id="floatingUsername"
                         placeholder="Username"
+                        minlength="3"
+                        maxlength="20"
+                        required
                 >
                 <small class="invalid-feedback danger" style="font-size: 15px">Username length must be between 3 and 20 characters!</small>
                 <label for="floatingUsername">Username</label>
@@ -39,6 +44,9 @@
                         class="form-control"
                         id="floatingFirstName"
                         placeholder="First name"
+                        minlength="2"
+                        maxlength="20"
+                        required
                 >
                 <small class="invalid-feedback danger" style="font-size: 15px">First name length must be between 2 and 20 characters!</small>
                 <label for="floatingFirstName">First name</label>
@@ -52,6 +60,9 @@
                         class="form-control"
                         id="floatingLastName"
                         placeholder="Last name"
+                        minlength="2"
+                        maxlength="20"
+                        required
                 >
                 <small class="invalid-feedback danger" style="font-size: 15px">Last name length must be between 2 and 20 characters!</small>
                 <label for="floatingLastName">Last name</label>
@@ -65,6 +76,7 @@
                         class="form-control"
                         id="floatingEmail"
                         placeholder="Email"
+                        required
                 >
                 <small class="invalid-feedback danger">Please enter valid email!</small>
                 <label for="floatingEmail">Email</label>
@@ -77,6 +89,9 @@
                         class="form-control"
                         id="floatingPassword"
                         placeholder="Password"
+                        minlength="8"
+                        maxlength="20"
+                        required
                 >
                 <small class="invalid-feedback danger">Password length must be between 8 and 20 characters!</small>
                 <label for="floatingPassword">Password</label>
@@ -88,10 +103,13 @@
                         type="password"
                         class="form-control"
                         id="floatingConfirmPassword"
-                        placeholder="Confirm Password"
+                        placeholder="Confirm password"
+                        minlength="8"
+                        maxlength="20"
+                        required
                 >
                 <small class="invalid-feedback danger">Password length must be between 8 and 20 characters!</small>
-                <label for="floatingConfirmPassword">Confirm Password</label>
+                <label for="floatingConfirmPassword">Confirm password</label>
             </div>
 
             <button class="btn btn-primary w-100 py-2" type="submit">Register</button>

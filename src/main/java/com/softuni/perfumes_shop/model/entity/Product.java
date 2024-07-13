@@ -1,10 +1,10 @@
 package com.softuni.perfumes_shop.model.entity;
 
-import com.softuni.perfumes_shop.model.enums.PerfumeType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 
 @Getter
 @Setter
@@ -13,7 +13,7 @@ import lombok.Setter;
 @Table(name = "products")
 public class Product extends BaseEntity {
 
-    @Column(nullable = false)
+    @Column(unique = true, nullable = false)
     private String name;
 
     @Column(nullable = false)
@@ -25,10 +25,15 @@ public class Product extends BaseEntity {
     @Column(nullable = false)
     private int stock;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private PerfumeType perfumeType;
+    @ManyToOne(optional = false)
+    private Type type;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private Image image;
+
+    private boolean isInStock() {
+        return this.stock > 0;
+    };
 
 }
 

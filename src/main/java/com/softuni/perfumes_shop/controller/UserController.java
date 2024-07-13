@@ -18,7 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/users")
+@RequestMapping("/user")
 public class UserController {
 
     private final UserService userService;
@@ -49,7 +49,7 @@ public class UserController {
             redirectAttributes.addFlashAttribute("registerData", registerData);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.registerData", bindingResult);
 
-            return "redirect:/users/register";
+            return "redirect:/user/register";
         }
 
         try {
@@ -60,16 +60,16 @@ public class UserController {
             redirectAttributes.addFlashAttribute("registerData", registerData);
             redirectAttributes.addFlashAttribute("usernameOrEmailTaken", true);
 
-            return "redirect:/users/register";
+            return "redirect:/user/register";
 
         } catch (IllegalArgumentException e) {
             redirectAttributes.addFlashAttribute("registerData", registerData);
             redirectAttributes.addFlashAttribute("passwordMismatch", true);
 
-            return "redirect:/users/register";
+            return "redirect:/user/register";
         }
 
-        return "redirect:/users/login";
+        return "redirect:/user/login";
     }
 
     @GetMapping("/login")

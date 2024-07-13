@@ -1,3 +1,8 @@
+<html lang="en" data-bs-theme="auto"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
 <header th:fragment="header">
 
     <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
@@ -21,39 +26,50 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav me-auto mb-2 mb-md-0">
             <li class="nav-item">
-              <a class="nav-link active" href="#">Home</a>
+              <a class="nav-link active" th:href="@{/}">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="#">Products</a>
+              <a class="nav-link active" th:href="@{/products}">Products</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="#">About Us</a>
-            <li class="nav-item">
-              <a class="nav-link active" href="#">Cart</a>
+              <a class="nav-link active" th:href="@{/about}">About Us</a>
             </li>
           </ul>
           <div class="d-flex">
-            <div class="dropdown bd-mode-toggle me-3">
+            <div class="d-flex me-2">
+              <a class="btn btn-outline-light" sec:authorize="isAuthenticated()" th:href="@{/cart}">
+                <i class="bi bi-cart"></i>
+              </a>
+            </div>
+            <div class="dropdown bd-mode-toggle me-2">
               <button class="btn btn-outline-light dropdown-toggle d-flex align-items-center"
                       id="userDropdown"
                       type="button"
                       data-bs-toggle="dropdown"
                       aria-expanded="false">
                 <i class="bi bi-person"></i>
-                </a>
+                </button>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                  <th:block sec:authorize="isAuthenticated()">
                   <li>
-                    <a class="dropdown-item" href="#">User</a>
+                    <a class="dropdown-item text-center" th:href="@{/user/profile}">Profile</a>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="#">Logout</a>
+                    <form class="dropdown-item text-center"
+                          th:action="@{/user/logout}"
+                        th:method="POST">
+                      <button class="btn btn-outline-light" type="submit">Logout</button>
+                    </form>
+                  </li>
+                  </th:block>
+                  <th:block sec:authorize="!isAuthenticated()">
+                  <li>
+                    <a class="dropdown-item text-center" th:href="@{/user/register}">Register</a>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="#">Login</a>
+                    <a class="dropdown-item text-center" th:href="@{/user/login}">Login</a>
                   </li>
-                  <li>
-                    <a class="dropdown-item" href="#">Register</a>
-                  </li>
+                  </th:block>
                 </ul>
             </div>
             <div class="dropdown bd-mode-toggle me-3">
@@ -99,3 +115,4 @@
       </div>
     </nav>
   </header>
+</html>

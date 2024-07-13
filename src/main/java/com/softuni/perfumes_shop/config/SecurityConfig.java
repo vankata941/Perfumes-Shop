@@ -25,22 +25,22 @@ public class SecurityConfig {
                         authorizeRequest -> {
                             authorizeRequest
                                     .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                                    .requestMatchers("/", "/users/login", "/users/login-error", "/users/register", "/about").permitAll()
+                                    .requestMatchers("/", "/user/login", "/user/login-error", "/user/register", "/about").permitAll()
                                     .anyRequest().authenticated();
                         }
                 )
                 .formLogin(
                         formLogin -> {
-                            formLogin.loginPage("/users/login");
+                            formLogin.loginPage("/user/login");
                             formLogin.usernameParameter("username");
                             formLogin.passwordParameter("password");
                             formLogin.defaultSuccessUrl("/", true);
-                            formLogin.failureUrl("/users/login-error");
+                            formLogin.failureUrl("/user/login-error");
                         }
                 )
                 .logout(
                         logout -> {
-                            logout.logoutUrl("/users/logout");
+                            logout.logoutUrl("/user/logout");
                             logout.logoutSuccessUrl("/");
                             logout.invalidateHttpSession(true);
                         }

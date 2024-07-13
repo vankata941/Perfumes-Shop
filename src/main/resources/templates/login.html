@@ -13,7 +13,7 @@
 <main class="form-field w-100 m-auto">
   <form
           th:object="${loginData}"
-          th:action="@{/users/login}"
+          th:action="@{/user/login}"
           th:method="POST"
   >
     <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
@@ -38,7 +38,7 @@
     <button class="btn btn-primary w-100 py-2" type="submit">Sign in</button>
     <div class="text-center mt-3">
       <span>You don't have an account?</span>
-      <a th:href="@{/users/register}" class="link-primary">Register</a>
+      <a th:href="@{/user/register}" class="link-primary">Register</a>
     </div>
   </form>
 

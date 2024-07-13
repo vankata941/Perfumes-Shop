@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class User extends BaseEntity {
     private String email;
 
     @Column(nullable = false)
-    private LocalDate memberSince = LocalDate.now();
+    private String memberSince = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles = new ArrayList<>();

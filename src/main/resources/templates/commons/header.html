@@ -34,6 +34,11 @@
             <li class="nav-item">
               <a class="nav-link active" th:href="@{/about}">About Us</a>
             </li>
+            <th:block sec:authorize="isAuthenticated()">
+            <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+              <a class="nav-link active" th:href="@{/products/add}">Add Product</a>
+            </li>
+            </th:block>
           </ul>
           <div class="d-flex">
             <div class="d-flex me-2">

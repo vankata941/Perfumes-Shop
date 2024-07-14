@@ -1,6 +1,7 @@
 package com.softuni.perfumes_shop.service.impl;
 
 import com.softuni.perfumes_shop.model.dto.AddProductDTO;
+import com.softuni.perfumes_shop.model.dto.ViewProductDTO;
 import com.softuni.perfumes_shop.model.entity.Image;
 import com.softuni.perfumes_shop.model.entity.Product;
 import com.softuni.perfumes_shop.model.entity.Type;
@@ -14,6 +15,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -55,5 +57,16 @@ public class ProductServiceImpl implements ProductService {
         }
 
         productRepository.save(product);
+    }
+
+    @Override
+    public List<ViewProductDTO> getAllProducts() {
+        List<Product> allProducts = productRepository.findAll();
+
+        return allProducts.stream().map(p -> {
+            ViewProductDTO viewProductDTO = modelMapper.map(p, ViewProductDTO.class);
+            viewProductDTO.setInStock(p.isInStock());
+            return viewProductDTO;
+        }).toList();
     }
 }

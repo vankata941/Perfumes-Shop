@@ -1,6 +1,7 @@
 package com.softuni.perfumes_shop.controller;
 
 import com.softuni.perfumes_shop.model.dto.AddProductDTO;
+import com.softuni.perfumes_shop.model.dto.ViewProductDTO;
 import com.softuni.perfumes_shop.model.enums.ProductType;
 import com.softuni.perfumes_shop.service.ProductService;
 import jakarta.persistence.NonUniqueResultException;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Controller
 @RequestMapping("/products")
@@ -59,6 +61,13 @@ public class ProductController {
         }
 
         return "index";
+    }
+
+    @GetMapping("/all")
+    public String viewAllProducts(Model model) {
+        List<ViewProductDTO> allProducts = productService.getAllProducts();
+        model.addAttribute("products", allProducts);
+        return "all-products";
     }
 
     @GetMapping("/eau-de-toilette")

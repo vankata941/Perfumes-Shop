@@ -28,8 +28,15 @@
             <li class="nav-item">
               <a class="nav-link active" th:href="@{/}">Home</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link active" th:href="@{/products}">Products</a>
+            <li class="nav-item dropdown">
+              <a class="nav-link active dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Products</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" th:href="@{/products/all}">All Products</a></li>
+              </ul>
             </li>
             <li class="nav-item">
               <a class="nav-link active" th:href="@{/about}">About Us</a>
@@ -57,22 +64,23 @@
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                   <th:block sec:authorize="isAuthenticated()">
                   <li>
-                    <a class="dropdown-item text-center" th:href="@{/user/profile}">Profile</a>
+                    <a class="dropdown-item" th:href="@{/user/profile}">Profile</a>
                   </li>
+                    <li><hr class="dropdown-divider"></li>
                   <li>
-                    <form class="dropdown-item text-center"
+                    <form class="dropdown-item"
                           th:action="@{/user/logout}"
                         th:method="POST">
-                      <button class="btn btn-outline-light" type="submit">Logout</button>
+                      <button class="border-0 bg-transparent" type="submit">Logout</button>
                     </form>
                   </li>
                   </th:block>
                   <th:block sec:authorize="!isAuthenticated()">
                   <li>
-                    <a class="dropdown-item text-center" th:href="@{/user/register}">Register</a>
+                    <a class="dropdown-item" th:href="@{/user/register}">Register</a>
                   </li>
                   <li>
-                    <a class="dropdown-item text-center" th:href="@{/user/login}">Login</a>
+                    <a class="dropdown-item" th:href="@{/user/login}">Login</a>
                   </li>
                   </th:block>
                 </ul>

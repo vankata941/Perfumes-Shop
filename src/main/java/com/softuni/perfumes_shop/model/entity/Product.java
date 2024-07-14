@@ -31,7 +31,7 @@ public class Product extends BaseEntity {
     @OneToOne(cascade = CascadeType.ALL)
     private Image image;
 
-    private boolean isInStock() {
+    public boolean isInStock() {
         return this.stock > 0;
     };
 

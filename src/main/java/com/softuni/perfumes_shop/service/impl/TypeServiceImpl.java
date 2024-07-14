@@ -1,7 +1,7 @@
 package com.softuni.perfumes_shop.service.impl;
 
 import com.softuni.perfumes_shop.model.entity.Type;
-import com.softuni.perfumes_shop.model.enums.PerfumeType;
+import com.softuni.perfumes_shop.model.enums.ProductType;
 import com.softuni.perfumes_shop.repository.TypeRepository;
 import com.softuni.perfumes_shop.service.TypeService;
 import lombok.RequiredArgsConstructor;
@@ -23,10 +23,10 @@ public class TypeServiceImpl implements TypeService {
     @Override
     public void initializeTypes() {
         if (typeRepository.count() == 0) {
-            Arrays.stream(PerfumeType.values())
+            Arrays.stream(ProductType.values())
                     .forEach(t -> {
                         Type type = new Type();
-                        type.setPerfumeType(t);
+                        type.setProductType(t);
                         type.setDescription(getDescription(t.name()));
 
                         typeRepository.save(type);
@@ -36,8 +36,9 @@ public class TypeServiceImpl implements TypeService {
     }
 
     @Override
-    public Optional<Type> findByPerfumeType(PerfumeType perfumeType) {
-        return typeRepository.findByPerfumeType(perfumeType);
+    public Optional<Type> findByProductTypeName(String productTypeName) {
+        productTypeName = productTypeName.replace(" ", "_").toUpperCase();
+        return typeRepository.findByProductType(ProductType.valueOf(productTypeName));
     }
 
     public static String getDescription(String name) {

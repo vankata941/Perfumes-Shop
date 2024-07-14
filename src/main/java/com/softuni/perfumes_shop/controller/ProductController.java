@@ -1,7 +1,7 @@
 package com.softuni.perfumes_shop.controller;
 
 import com.softuni.perfumes_shop.model.dto.AddProductDTO;
-import com.softuni.perfumes_shop.model.enums.PerfumeType;
+import com.softuni.perfumes_shop.model.enums.ProductType;
 import com.softuni.perfumes_shop.service.ProductService;
 import jakarta.persistence.NonUniqueResultException;
 import jakarta.validation.Valid;
@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.Arrays;
 
 @Controller
 @RequestMapping("/products")
@@ -29,7 +31,7 @@ public class ProductController {
 
     @GetMapping("/add")
     public String viewAddProduct(Model model) {
-        model.addAttribute("perfumeTypes", PerfumeType.values());
+        model.addAttribute("productTypes", Arrays.stream(ProductType.values()).map(ProductType::getName).toArray());
         return "add-product";
     }
 

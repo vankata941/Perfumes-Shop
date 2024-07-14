@@ -87,7 +87,7 @@
             </div>
             <div class="form-floating mb-3">
                     <select
-                            th:field="*{perfumeType}"
+                            th:field="*{productTypeName}"
                             th:errorclass="is-invalid"
                             name="perfumeType"
                             class="form-select"
@@ -95,7 +95,7 @@
                             required
                     >
                         <option value="">Select type</option>
-                        <option th:each="perfumeType : ${perfumeTypes}" th:value="${perfumeType}" th:text="${perfumeType}"></option>
+                        <option th:each="productType : ${productTypes}" th:value="${productType}" th:text="${productType}"></option>
                     </select>
 
                     <small class="invalid-feedback danger">You must select a type!</small>

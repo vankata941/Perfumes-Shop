@@ -1,6 +1,6 @@
 package com.softuni.perfumes_shop.model.entity;
 
-import com.softuni.perfumes_shop.model.enums.PerfumeType;
+import com.softuni.perfumes_shop.model.enums.ProductType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +15,7 @@ public class Type extends BaseEntity {
 
     @Column(unique = true, nullable = false)
     @Enumerated(EnumType.STRING)
-    private PerfumeType perfumeType;
+    private ProductType productType;
 
     @Column(nullable = false)
     private String description;

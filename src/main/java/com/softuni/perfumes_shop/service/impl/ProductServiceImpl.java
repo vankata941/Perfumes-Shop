@@ -35,7 +35,7 @@ public class ProductServiceImpl implements ProductService {
 
         Product product = modelMapper.map(productData, Product.class);
 
-        Optional<Type> optType = typeService.findByPerfumeType(productData.getPerfumeType());
+        Optional<Type> optType = typeService.findByProductTypeName(productData.getProductTypeName());
 
         if (optType.isPresent()) {
             product.setType(optType.get());

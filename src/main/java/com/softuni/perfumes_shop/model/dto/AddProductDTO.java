@@ -1,6 +1,5 @@
 package com.softuni.perfumes_shop.model.dto;
 
-import com.softuni.perfumes_shop.model.enums.PerfumeType;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,7 +30,7 @@ public class AddProductDTO {
     private Integer stock;
 
     @NotNull
-    private PerfumeType perfumeType;
+    private String productTypeName;
 
     @NotNull
     private MultipartFile image;

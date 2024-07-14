@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -32,6 +33,11 @@ public class TypeServiceImpl implements TypeService {
                     }
             );
         }
+    }
+
+    @Override
+    public Optional<Type> findByPerfumeType(PerfumeType perfumeType) {
+        return typeRepository.findByPerfumeType(perfumeType);
     }
 
     public static String getDescription(String name) {

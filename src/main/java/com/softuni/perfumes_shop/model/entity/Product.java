@@ -20,10 +20,10 @@ public class Product extends BaseEntity {
     private String description;
 
     @Column(nullable = false)
-    private double price;
+    private Double price;
 
     @Column(nullable = false)
-    private int stock;
+    private Integer stock;
 
     @ManyToOne(optional = false)
     private Type type;

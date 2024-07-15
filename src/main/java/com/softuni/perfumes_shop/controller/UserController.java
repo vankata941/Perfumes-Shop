@@ -1,9 +1,9 @@
 package com.softuni.perfumes_shop.controller;
 
-import com.softuni.perfumes_shop.model.dto.UserChangePasswordDTO;
-import com.softuni.perfumes_shop.model.dto.UserLoginDTO;
-import com.softuni.perfumes_shop.model.dto.UserProfileDTO;
-import com.softuni.perfumes_shop.model.dto.UserRegisterDTO;
+import com.softuni.perfumes_shop.model.dto.incoming.UserChangePasswordDTO;
+import com.softuni.perfumes_shop.model.dto.incoming.UserLoginDTO;
+import com.softuni.perfumes_shop.model.dto.outgoing.UserProfileDTO;
+import com.softuni.perfumes_shop.model.dto.incoming.UserRegisterDTO;
 import com.softuni.perfumes_shop.service.UserService;
 import com.softuni.perfumes_shop.service.session.CurrentUserDetails;
 import jakarta.persistence.NonUniqueResultException;

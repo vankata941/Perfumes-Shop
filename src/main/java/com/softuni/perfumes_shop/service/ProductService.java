@@ -1,7 +1,7 @@
 package com.softuni.perfumes_shop.service;
 
-import com.softuni.perfumes_shop.model.dto.AddProductDTO;
-import com.softuni.perfumes_shop.model.dto.ViewProductDTO;
+import com.softuni.perfumes_shop.model.dto.incoming.AddProductDTO;
+import com.softuni.perfumes_shop.model.dto.outgoing.ViewProductDTO;
 
 
 import java.util.List;

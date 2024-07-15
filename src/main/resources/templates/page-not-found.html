@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head th:replace="~{commons/head::head}"></head>
+<body>
+<div class="not-found-container text-center">
+    <h1>404</h1>
+    <p class="lead">Page Not Found</p>
+    <p>We're sorry, but the page you were looking for doesn't exist.</p>
+    <a th:href="@{/}" class="btn btn-primary">Please return to Homepage</a>
+</div>
+
+</body>
+</html>

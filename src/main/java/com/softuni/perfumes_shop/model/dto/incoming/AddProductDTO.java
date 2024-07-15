@@ -1,4 +1,4 @@
-package com.softuni.perfumes_shop.model.dto;
+package com.softuni.perfumes_shop.model.dto.incoming;
 
 import jakarta.validation.constraints.*;
 import lombok.Getter;

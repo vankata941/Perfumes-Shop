@@ -14,7 +14,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class TypeServiceImpl implements TypeService {
 
-    private static final String EUA_DE_TOILETTE = "Eau de Toilette: A light, refreshing fragrance with a lower concentration of perfume oils, perfect for everyday use. Subtle yet captivating aroma.";
+    private static final String EAU_DE_TOILETTE = "Eau de Toilette: A light, refreshing fragrance with a lower concentration of perfume oils, perfect for everyday use. Subtle yet captivating aroma.";
     private static final String EAU_DE_PERFUME = "Eau de Perfume: A long-lasting, rich fragrance with a higher concentration of perfume oils. Ideal for special occasions and making a lasting impression.";
     private static final String PERFUME = "Perfume: The most concentrated and long-lasting fragrance, offering an intense and luxurious aroma that lasts all day. Perfect for special occasions.";
 
@@ -37,13 +37,13 @@ public class TypeServiceImpl implements TypeService {
 
     @Override
     public Optional<Type> findByProductTypeName(String productTypeName) {
-        productTypeName = productTypeName.replace(" ", "_").toUpperCase();
-        return typeRepository.findByProductType(ProductType.valueOf(productTypeName));
+        ProductType type = ProductType.valueOf(productTypeName.replace(" ", "_").toUpperCase());
+        return typeRepository.findByProductType(type);
     }
 
     public static String getDescription(String name) {
         return switch(name.toUpperCase()) {
-            case "EUA_DE_TOILETTE" -> EUA_DE_TOILETTE;
+            case "EAU_DE_TOILETTE" -> EAU_DE_TOILETTE;
             case "EAU_DE_PERFUME" -> EAU_DE_PERFUME;
             case "PERFUME" -> PERFUME;
             default -> "No such type found!";

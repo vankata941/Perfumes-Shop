@@ -1,8 +1,9 @@
 package com.softuni.perfumes_shop.service.impl;
 
-import com.softuni.perfumes_shop.model.dto.UserChangePasswordDTO;
-import com.softuni.perfumes_shop.model.dto.UserProfileDTO;
-import com.softuni.perfumes_shop.model.dto.UserRegisterDTO;
+import com.softuni.perfumes_shop.model.dto.incoming.AddAdminDTO;
+import com.softuni.perfumes_shop.model.dto.incoming.UserChangePasswordDTO;
+import com.softuni.perfumes_shop.model.dto.outgoing.UserProfileDTO;
+import com.softuni.perfumes_shop.model.dto.incoming.UserRegisterDTO;
 import com.softuni.perfumes_shop.model.entity.Role;
 import com.softuni.perfumes_shop.model.entity.User;
 import com.softuni.perfumes_shop.model.enums.UserRole;
@@ -15,21 +16,16 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-
-    private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
     private final CurrentUserDetails currentUserDetails;
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
@@ -94,5 +90,24 @@ public class UserServiceImpl implements UserService {
 
         SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
         logoutHandler.logout(request, response, currentUserDetails.getAuthentication());
+    }
+
+    @Override
+    public void grantAuthorizationAdmin(AddAdminDTO newAdminData) {
+        Optional<User> optUser = userRepository.findByUsername(newAdminData.getUsername());
+
+        if (optUser.isEmpty()) {
+            throw new IllegalArgumentException("User not found!");
+        }
+
+        Optional<Role> optRole = roleRepository.findByUserRole(UserRole.ADMIN);
+
+        if (optRole.isEmpty()) {
+            throw new IllegalArgumentException("Role not found!");
+        }
+
+        optUser.get().addRole(optRole.get());
+
+        userRepository.save(optUser.get());
     }
 }

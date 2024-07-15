@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head th:replace="~{commons/head::head}"></head>
+
+<body>
+
+<header th:replace="~{commons/header::header}"></header>
+
+<main class="form-field w-100 m-auto">
+    <form
+            th:object="${newAdminData}"
+            th:action="@{/add-admin}"
+            th:method="POST"
+    >
+        <h1 class="h3 mb-3 fw-normal">Add New Administrator</h1>
+        <div class="text-danger mb-2" style="font-size: 15px" th:if="${hasError}" th:text="${errorMessage}">Error occurred!</div>
+
+        <div class="form-floating mb-3">
+            <input
+                    th:field="*{username}"
+                    th:errorclass="is-invalid"
+                    name="username"
+                    type="text"
+                    class="form-control"
+                    id="username"
+                    placeholder="Username"
+                    minlength="3"
+                    maxlength="20"
+                    required
+            >
+            <small class="invalid-feedback text-danger" style="font-size: 15px">Username length must be between 3 and 20 characters!</small>
+            <label for="username" class="form-label">Username</label>
+        </div>
+        <div class="d-grid gap-2">
+            <button class="btn btn-primary w-100 py-2" type="submit">Submit</button>
+        </div>
+    </form>
+</main>
+
+<footer th:replace="~{commons/footer::footer}"></footer>
+</body>
+</html>

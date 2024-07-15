@@ -1,9 +1,11 @@
 package com.softuni.perfumes_shop.controller;
 
-import com.softuni.perfumes_shop.model.dto.AddProductDTO;
-import com.softuni.perfumes_shop.model.dto.ViewProductDTO;
+import com.softuni.perfumes_shop.model.dto.incoming.AddProductDTO;
+import com.softuni.perfumes_shop.model.dto.outgoing.ViewProductDTO;
 import com.softuni.perfumes_shop.model.enums.ProductType;
 import com.softuni.perfumes_shop.service.ProductService;
+import com.softuni.perfumes_shop.service.exception.AuthorizationCheckException;
+import com.softuni.perfumes_shop.service.session.CurrentUserDetails;
 import jakarta.persistence.NonUniqueResultException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +27,7 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
+    private final CurrentUserDetails currentUserDetails;
 
     @ModelAttribute("productData")
     private AddProductDTO productData() {
@@ -33,6 +36,9 @@ public class ProductController {
 
     @GetMapping("/add")
     public String viewAddProduct(Model model) {
+        if (!currentUserDetails.hasRole("ADMIN")) {
+            throw new AuthorizationCheckException();
+        }
         model.addAttribute("productTypes", Arrays.stream(ProductType.values()).map(ProductType::getName).toArray());
         return "add-product";
     }
@@ -42,6 +48,10 @@ public class ProductController {
                                BindingResult bindingResult,
                                RedirectAttributes redirectAttributes
     ) {
+        if (!currentUserDetails.hasRole("ADMIN")) {
+            throw new AuthorizationCheckException();
+        }
+
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("productData", productData);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.productData", bindingResult);

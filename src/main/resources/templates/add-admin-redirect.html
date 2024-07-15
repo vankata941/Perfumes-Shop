@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head th:replace="~{commons/head::head}"></head>
+
+<body>
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="text-center">
+        <h1 class="mb-4">New Admin Appeared</h1>
+        <p class="lead">You have successfully promoted user: <span th:text="${username}"></span> to Admin!</p>
+        <a th:href="@{/}" class="btn btn-primary mt-3">Go to Home Page</a>
+    </div>
+</div>
+</body>
+</html>

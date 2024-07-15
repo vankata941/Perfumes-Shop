@@ -8,6 +8,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class CurrentUserDetails {
@@ -17,10 +19,10 @@ public class CurrentUserDetails {
     private final UserRepository userRepository;
 
 
-    public User getCurrentUser() {
-        return userRepository.findByUsername(getUserDetails().getUsername())
-                .orElse(null);
+    public Optional<User> optCurrentUser() {
+        return userRepository.findByUsername(getUserDetails().getUsername());
     }
+
     public UserDetails getUserDetails() {
         return (UserDetails) getAuthentication().getPrincipal();
     }

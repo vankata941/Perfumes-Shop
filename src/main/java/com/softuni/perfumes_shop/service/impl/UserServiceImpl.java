@@ -1,5 +1,6 @@
 package com.softuni.perfumes_shop.service.impl;
 
+import com.softuni.perfumes_shop.model.dto.UserChangePasswordDTO;
 import com.softuni.perfumes_shop.model.dto.UserProfileDTO;
 import com.softuni.perfumes_shop.model.dto.UserRegisterDTO;
 import com.softuni.perfumes_shop.model.entity.Role;
@@ -10,9 +11,14 @@ import com.softuni.perfumes_shop.repository.UserRepository;
 import com.softuni.perfumes_shop.service.UserService;
 import com.softuni.perfumes_shop.service.session.CurrentUserDetails;
 import jakarta.persistence.NonUniqueResultException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,6 +29,7 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
 
+    private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
     private final CurrentUserDetails currentUserDetails;
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
@@ -34,11 +41,11 @@ public class UserServiceImpl implements UserService {
     public void register(UserRegisterDTO registerData) {
 
         if (userRepository.existsByUsernameOrEmail(registerData.getUsername(), registerData.getEmail())) {
-            throw new NonUniqueResultException();
+            throw new NonUniqueResultException(); //TODO: Add more precise error handling!
         }
 
         if (!registerData.getPassword().equals(registerData.getConfirmPassword())) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(); //TODO: Add more precise error handling!
         }
 
         User user = modelMapper.map(registerData, User.class);
@@ -52,6 +59,40 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserProfileDTO getProfileData() {
-        return modelMapper.map(currentUserDetails.getCurrentUser(), UserProfileDTO.class);
+        if (currentUserDetails.optCurrentUser().isEmpty()) {
+            return new UserProfileDTO(); //TODO: Check this output!
+        }
+        return modelMapper.map(currentUserDetails.optCurrentUser().get(), UserProfileDTO.class);
+    }
+
+    @Override
+    public void changePassword(UserChangePasswordDTO changePasswordData, HttpServletRequest request, HttpServletResponse response) {
+
+        if (!changePasswordData.getNewPassword().equals(changePasswordData.getConfirmNewPassword())) {
+            throw new IllegalArgumentException("New password and confirm password should be the same!");
+        }
+
+        Optional<User> optUser = currentUserDetails.optCurrentUser();
+
+        if (optUser.isEmpty()) {
+            throw new IllegalArgumentException("User not found!");
+        }
+
+        if (!passwordEncoder.matches(changePasswordData.getCurrentPassword(), optUser.get().getPassword())) {
+            throw new IllegalArgumentException("The provided current password is incorrect!");
+        }
+
+        if (passwordEncoder.matches(changePasswordData.getNewPassword(), optUser.get().getPassword())) {
+            throw new IllegalArgumentException("The new password should be different from the old one!");
+        }
+
+        User user = optUser.get();
+
+        user.setPassword(passwordEncoder.encode(changePasswordData.getNewPassword()));
+
+        userRepository.save(user);
+
+        SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
+        logoutHandler.logout(request, response, currentUserDetails.getAuthentication());
     }
 }

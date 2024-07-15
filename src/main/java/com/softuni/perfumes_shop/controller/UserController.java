@@ -1,10 +1,14 @@
 package com.softuni.perfumes_shop.controller;
 
+import com.softuni.perfumes_shop.model.dto.UserChangePasswordDTO;
 import com.softuni.perfumes_shop.model.dto.UserLoginDTO;
 import com.softuni.perfumes_shop.model.dto.UserProfileDTO;
 import com.softuni.perfumes_shop.model.dto.UserRegisterDTO;
 import com.softuni.perfumes_shop.service.UserService;
+import com.softuni.perfumes_shop.service.session.CurrentUserDetails;
 import jakarta.persistence.NonUniqueResultException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -22,6 +26,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class UserController {
 
     private final UserService userService;
+    private final CurrentUserDetails currentUserDetails;
 
     @ModelAttribute("registerData")
     private UserRegisterDTO registerData() {
@@ -31,6 +36,11 @@ public class UserController {
     @ModelAttribute("loginData")
     private UserLoginDTO loginData() {
         return new UserLoginDTO();
+    }
+
+    @ModelAttribute("changePasswordData")
+    private UserChangePasswordDTO changePasswordData() {
+        return new UserChangePasswordDTO();
     }
 
     @GetMapping("/register")
@@ -91,5 +101,38 @@ public class UserController {
         model.addAttribute("profileData", profile);
 
         return "user-profile";
+    }
+
+    @GetMapping("/change-password")
+    public String viewChangePassword() {
+        return "change-password";
+    }
+
+    @PostMapping("/change-password")
+    public String doChangePassword(
+            @Valid UserChangePasswordDTO changePasswordData,
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttributes,
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("changePasswordData", changePasswordData);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.changePasswordData", bindingResult);
+
+            return "redirect:/user/change-password";
+        }
+
+        try {
+            userService.changePassword(changePasswordData, request, response);
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("changePasswordData", changePasswordData);
+            redirectAttributes.addFlashAttribute("hasError", true);
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+
+            return "redirect:/user/change-password";
+        }
+
+        return "change-password-redirect";
     }
 }

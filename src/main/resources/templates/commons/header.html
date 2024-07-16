@@ -26,33 +26,57 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav me-auto mb-2 mb-md-0">
             <li class="nav-item">
-              <a class="nav-link active" th:href="@{/}">Home</a>
+              <a class="nav-link active"
+                 th:href="@{/}"
+                 th:text="#{nav_bar_home}"
+              >Home</a>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link active dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Products</a>
+              <a class="nav-link active dropdown-toggle"
+                 href="#"
+                 data-bs-toggle="dropdown"
+                 aria-expanded="false"
+                 th:text="#{nav_bar_products}"
+              >Products</a>
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="#">Action</a></li>
                 <li><a class="dropdown-item" href="#">Another action</a></li>
                 <li><a class="dropdown-item" href="#">Something else here</a></li>
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" th:href="@{/products/all}">All Products</a></li>
+                <li><a class="dropdown-item"
+                       th:href="@{/products/all}"
+                       th:text="#{nav_bar_all_products}"
+                >All Products</a></li>
               </ul>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" th:href="@{/about}">About Us</a>
+              <a class="nav-link active"
+                 th:href="@{/about}"
+                 th:text="#{nav_bar_about_us}"
+              >About Us</a>
             </li>
             <th:block sec:authorize="isAuthenticated() && hasRole('ADMIN')">
             <li class="nav-item">
-              <a class="nav-link active" th:href="@{/products/add}">Add Product</a>
+              <a class="nav-link active"
+                 th:href="@{/products/add}"
+                 th:text="#{nav_bar_add_product}"
+              >Add Product</a>
             </li>
               <li class="nav-item">
-                <a class="nav-link active" th:href="@{/authorize}">Authorize</a>
+                <a class="nav-link active"
+                   th:href="@{/authorize}"
+                   th:text="#{nav_bar_add_authorization}"
+                >Authorize</a>
               </li>
             </th:block>
           </ul>
           <div class="d-flex">
             <div class="d-flex me-2">
-              <a class="btn btn-outline-light" sec:authorize="isAuthenticated()" th:href="@{/cart}">
+              <a class="btn btn-outline-light"
+                 sec:authorize="isAuthenticated()"
+                 th:href="@{/cart}"
+                 th:text="#{nav_bar_cart}"
+              >
                 <i class="bi bi-cart"></i>
               </a>
             </div>
@@ -67,23 +91,35 @@
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                   <th:block sec:authorize="isAuthenticated()">
                   <li>
-                    <a class="dropdown-item" th:href="@{/user/profile}">Profile</a>
+                    <a class="dropdown-item"
+                       th:href="@{/user/profile}"
+                       th:text="#{nav_bar_profile}"
+                    >Profile</a>
                   </li>
                     <li><hr class="dropdown-divider"></li>
                   <li>
                     <form
                           th:action="@{/user/logout}"
                           th:method="POST">
-                      <button class="dropdown-item border-0 bg-transparent" type="submit">Logout</button>
+                      <button class="dropdown-item border-0 bg-transparent"
+                              type="submit"
+                              th:text="#{nav_bar_logout}"
+                      >Logout</button>
                     </form>
                   </li>
                   </th:block>
                   <th:block sec:authorize="!isAuthenticated()">
                   <li>
-                    <a class="dropdown-item" th:href="@{/user/register}">Register</a>
+                    <a class="dropdown-item"
+                       th:href="@{/user/register}"
+                       th:text="#{nav_bar_register}"
+                    >Register</a>
                   </li>
                   <li>
-                    <a class="dropdown-item" th:href="@{/user/login}">Login</a>
+                    <a class="dropdown-item"
+                       th:href="@{/user/login}"
+                       th:text="#{nav_bar_login}"
+                    >Login</a>
                   </li>
                   </th:block>
                 </ul>
@@ -102,29 +138,44 @@
                 <li>
                   <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
                     <svg class="bi me-2 opacity-50" width="1em" height="1em"><use href="#sun-fill"></use></svg>
-                    Light
+                    <span th:text="#{nav_bar_theme_light}">Light</span>
                     <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
                   </button>
                 </li>
                 <li>
                   <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
                     <svg class="bi me-2 opacity-50" width="1em" height="1em"><use href="#moon-stars-fill"></use></svg>
-                    Dark
+                    <span th:text="#{nav_bar_theme_dark}">Dark</span>
                     <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
                   </button>
                 </li>
                 <li>
                   <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto" aria-pressed="true">
                     <svg class="bi me-2 opacity-50" width="1em" height="1em"><use href="#circle-half"></use></svg>
-                    Auto
+                    <span th:text="#{nav_bar_theme_auto}">Auto</span>
                     <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
                   </button>
                 </li>
               </ul>
             </div>
             <form class="d-flex" role="search">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-light" type="submit">Search</button>
+              <input class="form-control me-2" type="search" th:placeholder="#{nav_bar_search}" aria-label="Search">
+              <button class="btn btn-outline-light"
+                      type="submit"
+                      th:text="#{nav_bar_search}"
+              >Search</button>
+            </form>
+            <form class="d-flex align-items-center mx-2"
+                  th:method="GET">
+              <label for="lang" class="visually-hidden">Language</label>
+              <select
+                      id="lang"
+                      name="lang"
+                      class="form-select btn btn-outline-light no-arrow"
+                      onchange="this.form.submit()">
+                <option class="dropdown-item" value="en_US" th:selected="${#locale.toString()} == 'en_US'">EN</option>
+                <option class="dropdown-item" value="bg_BG" th:selected="${#locale.toString()} == 'bg_BG'">БГ</option>
+              </select>
             </form>
           </div>
         </div>

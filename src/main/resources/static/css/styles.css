@@ -107,3 +107,7 @@ body {
 .form-field .form-floating:focus-within {
     z-index: 2;
 }
+
+.no-arrow {
+    background-image: none !important;
+}

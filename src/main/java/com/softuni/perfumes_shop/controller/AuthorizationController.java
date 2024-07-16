@@ -1,6 +1,7 @@
 package com.softuni.perfumes_shop.controller;
 
-import com.softuni.perfumes_shop.model.dto.incoming.AddAdminDTO;
+import com.softuni.perfumes_shop.model.dto.incoming.AddAuthorizationDTO;
+import com.softuni.perfumes_shop.model.enums.UserRole;
 import com.softuni.perfumes_shop.service.UserService;
 import com.softuni.perfumes_shop.service.exception.AuthorizationCheckException;
 import com.softuni.perfumes_shop.service.session.CurrentUserDetails;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Arrays;
+
 @Controller
 @RequiredArgsConstructor
 public class AuthorizationController {
@@ -21,21 +24,28 @@ public class AuthorizationController {
     private final UserService userService;
     private final CurrentUserDetails currentUserDetails;
 
-    @ModelAttribute("newAdminData")
-    private AddAdminDTO newAdminData() {
-        return new AddAdminDTO();
+    @ModelAttribute("authorizationData")
+    private AddAuthorizationDTO authorizationData() {
+        return new AddAuthorizationDTO();
     }
 
-    @GetMapping("/add-admin")
-    public String viewAddAdmin() {
+    @GetMapping("/authorize")
+    public String viewAuthorize(Model model) {
         if (!currentUserDetails.hasRole("ADMIN")) {
             throw new AuthorizationCheckException();
         }
-        return "add-admin";
+
+        model.addAttribute("userRoles",
+                Arrays.stream(UserRole.values())
+                .map(UserRole::getName)
+                .filter(ur -> !ur.equals("User"))
+                .toArray());
+
+        return "authorize";
     }
 
-    @PostMapping("/add-admin")
-    public String doAddAdmin(@Valid AddAdminDTO newAdminData,
+    @PostMapping("/authorize")
+    public String doAuthorize(@Valid AddAuthorizationDTO authorizationData,
                              BindingResult bindingResult,
                              RedirectAttributes redirectAttributes,
                              Model model
@@ -45,22 +55,22 @@ public class AuthorizationController {
         }
 
         if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("newAdminData", newAdminData);
+            redirectAttributes.addFlashAttribute("authorizationData", authorizationData);
 
-            return "redirect:/add-admin";
+            return "redirect:/authorize";
         }
 
         try {
-            userService.grantAuthorizationAdmin(newAdminData);
+            userService.grantAuthorizationAdmin(authorizationData);
         } catch (IllegalArgumentException e) {
-            redirectAttributes.addFlashAttribute("newAdminData", newAdminData);
+            redirectAttributes.addFlashAttribute("authorizationData", authorizationData);
             redirectAttributes.addFlashAttribute("hasError", true);
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
-            return "redirect:/add-admin";
+            return "redirect:/authorize";
         }
 
-        model.addAttribute("username", newAdminData.getUsername());
+        model.addAttribute("authorizationData", authorizationData);
 
-        return "add-admin-redirect";
+        return "authorize-redirect";
     }
 }

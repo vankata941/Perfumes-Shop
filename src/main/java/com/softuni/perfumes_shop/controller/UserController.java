@@ -45,6 +45,9 @@ public class UserController {
 
     @GetMapping("/register")
     public String viewRegister() {
+        if (currentUserDetails.isAuthenticated()) {
+            return "index";
+        }
         return "register";
     }
 
@@ -54,6 +57,9 @@ public class UserController {
                              BindingResult bindingResult,
                              RedirectAttributes redirectAttributes
     ) {
+        if (currentUserDetails.isAuthenticated()) {
+            return "index";
+        }
 
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("registerData", registerData);
@@ -84,11 +90,18 @@ public class UserController {
 
     @GetMapping("/login")
     public String viewLogin() {
+        if (currentUserDetails.isAuthenticated()) {
+            return "index";
+        }
         return "login";
     }
 
     @GetMapping("/login-error")
     public String viewLoginError(Model model) {
+        if (currentUserDetails.isAuthenticated()) {
+            return "index";
+        }
+
         model.addAttribute("errorMessage", true);
         model.addAttribute("loginData", new UserLoginDTO());
 

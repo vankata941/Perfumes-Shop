@@ -39,7 +39,12 @@ public class ProductController {
         if (!currentUserDetails.hasRole("ADMIN")) {
             throw new AuthorizationCheckException();
         }
-        model.addAttribute("productTypes", Arrays.stream(ProductType.values()).map(ProductType::getName).toArray());
+
+        model.addAttribute("productTypes",
+                Arrays.stream(ProductType.values())
+                        .map(ProductType::getName)
+                        .toArray());
+
         return "add-product";
     }
 

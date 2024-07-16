@@ -12,11 +12,11 @@
 
 <main class="form-field w-100 m-auto">
     <form
-            th:object="${newAdminData}"
-            th:action="@{/add-admin}"
+            th:object="${authorizationData}"
+            th:action="@{/authorize}"
             th:method="POST"
     >
-        <h1 class="h3 mb-3 fw-normal">Add New Administrator</h1>
+        <h1 class="h3 mb-3 fw-normal">Add New Authorization</h1>
         <div class="text-danger mb-2" style="font-size: 15px" th:if="${hasError}" th:text="${errorMessage}">Error occurred!</div>
 
         <div class="form-floating mb-3">
@@ -34,6 +34,22 @@
             >
             <small class="invalid-feedback text-danger" style="font-size: 15px">Username length must be between 3 and 20 characters!</small>
             <label for="username" class="form-label">Username</label>
+        </div>
+        <div class="form-floating mb-3">
+            <select
+                    th:field="*{userRoleName}"
+                    th:errorclass="is-invalid"
+                    name="userRoleName"
+                    class="form-select"
+                    id="floatingUserRole"
+                    required
+            >
+                <option value="">Select role</option>
+                <option th:each="userRole : ${userRoles}" th:value="${userRole}" th:text="${userRole}"></option>
+            </select>
+
+            <small class="invalid-feedback danger">You must select a role!</small>
+            <label for="floatingUserRole"></label>
         </div>
         <div class="d-grid gap-2">
             <button class="btn btn-primary w-100 py-2" type="submit">Submit</button>

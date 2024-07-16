@@ -9,8 +9,8 @@
 <body>
 <div class="container d-flex justify-content-center align-items-center vh-100">
     <div class="text-center">
-        <h1 class="mb-4">New Admin Appeared</h1>
-        <p class="lead">You have successfully promoted user: <span th:text="${username}"></span> to Admin!</p>
+        <h1 class="mb-4">New Authorization was added!</h1>
+        <p class="lead">You have successfully promoted user: <span th:text="${authorizationData.getUsername()}"></span> to <span th:text="${authorizationData.getUserRoleName()}"></span>!</p>
         <a th:href="@{/}" class="btn btn-primary mt-3">Go to Home Page</a>
     </div>
 </div>

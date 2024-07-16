@@ -9,10 +9,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class AddAdminDTO {
+public class AddAuthorizationDTO {
 
     @NotBlank
     @Size(min = 3, max = 20)
     private String username;
 
+    @NotBlank
+    private String userRoleName;
 }

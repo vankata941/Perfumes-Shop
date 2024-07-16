@@ -7,6 +7,8 @@ import com.softuni.perfumes_shop.service.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class RoleServiceImpl implements RoleService {
@@ -24,5 +26,16 @@ public class RoleServiceImpl implements RoleService {
                 roleRepository.save(role);
             }
         }
+    }
+
+    @Override
+    public Optional<Role> findByUserRole(UserRole userRole) {
+        return roleRepository.findByUserRole(userRole);
+    }
+
+    @Override
+    public Optional<Role> findByUserRoleName(String userRoleName) {
+        UserRole userRole = UserRole.valueOf(userRoleName.replace(" ", "_").toUpperCase());
+        return roleRepository.findByUserRole(userRole);
     }
 }

@@ -1,6 +1,6 @@
 package com.softuni.perfumes_shop.service;
 
-import com.softuni.perfumes_shop.model.dto.incoming.AddAdminDTO;
+import com.softuni.perfumes_shop.model.dto.incoming.AddAuthorizationDTO;
 import com.softuni.perfumes_shop.model.dto.incoming.UserChangePasswordDTO;
 import com.softuni.perfumes_shop.model.dto.outgoing.UserProfileDTO;
 import com.softuni.perfumes_shop.model.dto.incoming.UserRegisterDTO;
@@ -15,5 +15,5 @@ public interface UserService {
 
     void changePassword(UserChangePasswordDTO changePasswordData, HttpServletRequest request, HttpServletResponse response);
 
-    void grantAuthorizationAdmin(AddAdminDTO newAdminData);
+    void grantAuthorizationAdmin(AddAuthorizationDTO newAdminData);
 }

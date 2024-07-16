@@ -1,14 +1,14 @@
 package com.softuni.perfumes_shop.service.impl;
 
-import com.softuni.perfumes_shop.model.dto.incoming.AddAdminDTO;
+import com.softuni.perfumes_shop.model.dto.incoming.AddAuthorizationDTO;
 import com.softuni.perfumes_shop.model.dto.incoming.UserChangePasswordDTO;
 import com.softuni.perfumes_shop.model.dto.outgoing.UserProfileDTO;
 import com.softuni.perfumes_shop.model.dto.incoming.UserRegisterDTO;
 import com.softuni.perfumes_shop.model.entity.Role;
 import com.softuni.perfumes_shop.model.entity.User;
 import com.softuni.perfumes_shop.model.enums.UserRole;
-import com.softuni.perfumes_shop.repository.RoleRepository;
 import com.softuni.perfumes_shop.repository.UserRepository;
+import com.softuni.perfumes_shop.service.RoleService;
 import com.softuni.perfumes_shop.service.UserService;
 import com.softuni.perfumes_shop.service.session.CurrentUserDetails;
 import jakarta.persistence.NonUniqueResultException;
@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
-    private final RoleRepository roleRepository;
+    private final RoleService roleService;
 
 
     @Override
@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
 
         User user = modelMapper.map(registerData, User.class);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        Optional<Role> optRole = roleRepository.findByUserRole(UserRole.USER);
+        Optional<Role> optRole = roleService.findByUserRole(UserRole.USER);
         optRole.ifPresent(user::addRole);
 
         this.userRepository.save(user);
@@ -93,17 +93,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void grantAuthorizationAdmin(AddAdminDTO newAdminData) {
+    public void grantAuthorizationAdmin(AddAuthorizationDTO newAdminData) {
         Optional<User> optUser = userRepository.findByUsername(newAdminData.getUsername());
 
         if (optUser.isEmpty()) {
             throw new IllegalArgumentException("User not found!");
         }
 
-        Optional<Role> optRole = roleRepository.findByUserRole(UserRole.ADMIN);
+        Optional<Role> optRole = roleService.findByUserRoleName(newAdminData.getUserRoleName());
 
         if (optRole.isEmpty()) {
             throw new IllegalArgumentException("Role not found!");
+        }
+
+        if (optUser.get().getRoles().contains(optRole.get())) {
+            throw new IllegalArgumentException("Role already exists!");
         }
 
         optUser.get().addRole(optRole.get());

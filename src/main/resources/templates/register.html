@@ -16,7 +16,7 @@
             th:action="@{/user/register}"
             th:method="POST"
         >
-            <h1 class="h3 mb-3 fw-normal">Register</h1>
+            <h1 class="h3 mb-3 fw-normal" th:text="#{register}">Register</h1>
             <div class="text-danger mb-2" style="font-size: 15px" th:if="${usernameOrEmailTaken}" th:text="'Username or email address already in use!'"></div>
             <div class="text-danger mb-2" style="font-size: 15px" th:if="${passwordMismatch}" th:text="'Password and confirm password should be the same!'"></div>
             <div class="form-floating mb-3">
@@ -32,8 +32,12 @@
                         maxlength="20"
                         required
                 >
-                <small class="invalid-feedback danger" style="font-size: 15px">Username length must be between 3 and 20 characters!</small>
-                <label for="floatingUsername">Username</label>
+                <small class="invalid-feedback danger" style="font-size: 15px" th:text="#{username_length}">
+                    Username length must be between 3 and 20 characters!
+                </small>
+                <label for="floatingUsername" th:text="#{placeholder_username}">
+                    Username
+                </label>
             </div>
             <div class="form-floating mb-3">
                 <input
@@ -46,8 +50,12 @@
                         placeholder="Email"
                         required
                 >
-                <small class="invalid-feedback danger">Please enter valid email!</small>
-                <label for="floatingEmail">Email</label>
+                <small class="invalid-feedback danger" th:text="#{valid_email}">
+                    Please enter valid email!
+                </small>
+                <label for="floatingEmail" th:text="#{placeholder_email}">
+                    Email
+                </label>
             </div>
             <div class="form-floating mb-3">
                 <input
@@ -62,8 +70,12 @@
                         maxlength="20"
                         required
                 >
-                <small class="invalid-feedback danger" style="font-size: 15px">First name length must be between 2 and 20 characters!</small>
-                <label for="floatingFirstName">First name</label>
+                <small class="invalid-feedback danger" style="font-size: 15px" th:text="#{first_name_length}">
+                    First name length must be between 2 and 20 characters!
+                </small>
+                <label for="floatingFirstName" th:text="#{placeholder_first_name}">
+                    First name
+                </label>
             </div>
             <div class="form-floating mb-3">
                 <input
@@ -78,8 +90,12 @@
                         maxlength="20"
                         required
                 >
-                <small class="invalid-feedback danger" style="font-size: 15px">Last name length must be between 2 and 20 characters!</small>
-                <label for="floatingLastName">Last name</label>
+                <small class="invalid-feedback danger" style="font-size: 15px" th:text="#{last_name_length}">
+                    Last name length must be between 2 and 20 characters!
+                </small>
+                <label for="floatingLastName" th:text="#{placeholder_last_name}">
+                    Last name
+                </label>
             </div>
             <div class="form-floating mb-3">
                 <input
@@ -93,8 +109,12 @@
                         maxlength="20"
                         required
                 >
-                <small class="invalid-feedback danger">Password length must be between 8 and 20 characters!</small>
-                <label for="floatingPassword">Password</label>
+                <small class="invalid-feedback danger" th:text="#{password_length}">
+                    Password length must be between 8 and 20 characters!
+                </small>
+                <label for="floatingPassword" th:text="#{placeholder_password}">
+                    Password
+                </label>
             </div>
             <div class="form-floating mb-3">
                 <input
@@ -108,15 +128,23 @@
                         maxlength="20"
                         required
                 >
-                <small class="invalid-feedback danger">Password length must be between 8 and 20 characters!</small>
-                <label for="floatingConfirmPassword">Confirm password</label>
+                <small class="invalid-feedback danger" th:text="#{password_length}">
+                    Password length must be between 8 and 20 characters!
+                </small>
+                <label for="floatingConfirmPassword" th:text="#{placeholder_confirm_password}">
+                    Confirm password
+                </label>
             </div>
 
-            <button class="btn btn-primary w-100 py-2" type="submit">Register</button>
+            <button class="btn btn-primary w-100 py-2" type="submit" th:text="#{register}">
+                Register
+            </button>
             
             <div class="text-center mt-3">
-                <span>Already have an account? </span>
-                <a th:href="@{/user/login}" class="link-primary">Login</a>
+                <span th:text="#{register_have_account_text}">Already have an account?</span>
+                <a class="link-primary-no-underline" th:href="@{/user/login}" th:text="#{register_button_log_in}">
+                    Login
+                </a>
             </div>
         </form>
     </main>

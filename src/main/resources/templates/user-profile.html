@@ -11,28 +11,30 @@
   <div class="container mt-5 w-100" style="max-width: 600px;">
     <div class="card">
       <div class="card-header text-center">
-        <h2>User Profile</h2>
+        <h2 th:text="#{user_profile_heading}">User Profile</h2>
       </div>
       <div class="card-body">
         <div class="mb-3 text-center">
-          <strong>First Name:</strong> <span th:text="${profileData.getFirstName()}"></span>
+          <strong th:text="#{user_profile_first_name}">First name:</strong> <span th:text="${profileData.getFirstName()}"></span>
         </div>
         <div class="mb-3 text-center">
-          <strong>Last Name:</strong> <span th:text="${profileData.getLastName()}"></span>
+          <strong th:text="#{user_profile_last_name}">Last name:</strong> <span th:text="${profileData.getLastName()}"></span>
         </div>
         <div class="mb-3 text-center">
-          <strong>Email:</strong> <span th:text="${profileData.getEmail()}"></span>
+          <strong th:text="#{user_profile_email}">Email:</strong> <span th:text="${profileData.getEmail()}"></span>
         </div>
         <hr>
         <div class="mb-3 text-center">
-          <strong>Username:</strong> <span th:text="${profileData.getUsername()}"></span>
+          <strong th:text="#{user_profile_username}">Username:</strong> <span th:text="${profileData.getUsername()}"></span>
         </div>
         <div class="mb-3 text-center">
-          <strong>Member Since:</strong> <span th:text="${profileData.getMemberSince()}"></span>
+          <strong th:text="#{user_profile_member_since}">Member since:</strong> <span th:text="${profileData.getMemberSince()}"></span>
         </div>
         <hr>
         <div class="text-center">
-          <a th:href="@{/user/change-password}" class="btn btn-primary">Change password</a>
+          <a class="btn btn-primary" th:href="@{/user/change-password}" th:text="#{change_password_button}">
+            Change password
+          </a>
         </div>
       </div>
     </div>

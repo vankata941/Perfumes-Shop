@@ -102,7 +102,7 @@ public class UserController {
             return "index";
         }
 
-        model.addAttribute("errorMessage", true);
+        model.addAttribute("hasError", true);
         model.addAttribute("loginData", new UserLoginDTO());
 
         return "login";

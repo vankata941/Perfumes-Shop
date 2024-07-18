@@ -1,7 +1,7 @@
 package com.softuni.perfumes_shop.service.impl;
 
-import com.softuni.perfumes_shop.model.dto.incoming.AddProductDTO;
-import com.softuni.perfumes_shop.model.dto.outgoing.ViewProductDTO;
+import com.softuni.perfumes_shop.model.dto.inbound.AddProductDTO;
+import com.softuni.perfumes_shop.model.dto.outbound.ViewProductDTO;
 import com.softuni.perfumes_shop.model.entity.Image;
 import com.softuni.perfumes_shop.model.entity.Product;
 import com.softuni.perfumes_shop.model.entity.Type;
@@ -9,12 +9,14 @@ import com.softuni.perfumes_shop.repository.ProductRepository;
 import com.softuni.perfumes_shop.service.ImageService;
 import com.softuni.perfumes_shop.service.ProductService;
 import com.softuni.perfumes_shop.service.TypeService;
+import com.softuni.perfumes_shop.service.exception.ObjectNotFoundException;
 import jakarta.persistence.NonUniqueResultException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,10 +65,28 @@ public class ProductServiceImpl implements ProductService {
     public List<ViewProductDTO> getAllProducts() {
         List<Product> allProducts = productRepository.findAll();
 
-        return allProducts.stream().map(p -> {
-            ViewProductDTO viewProductDTO = modelMapper.map(p, ViewProductDTO.class);
-            viewProductDTO.setInStock(p.isInStock());
-            return viewProductDTO;
-        }).toList();
+        return allProducts.stream().map(this::mapProduct).toList();
+    }
+
+    private ViewProductDTO mapProduct(Product product) {
+        ViewProductDTO viewProductDTO = modelMapper.map(product, ViewProductDTO.class);
+        viewProductDTO.setInStock(product.isInStock());
+        if (product.getImage() != null) {
+            viewProductDTO.setImage(Base64.getEncoder().encodeToString(product.getImage().getImage()));
+        }
+        if (product.getType() != null) {
+            viewProductDTO.setProductTypeName(product.getType().getProductType().getName());
+        }
+        return viewProductDTO;
+    }
+
+    @Override
+    public ViewProductDTO getProductById(Long id) {
+        Optional<Product> optProduct = productRepository.findById(id);
+        if (optProduct.isEmpty()) {
+            throw new ObjectNotFoundException("Product with id " + id + " was not found!", id);
+        }
+
+        return mapProduct(optProduct.get());
     }
 }

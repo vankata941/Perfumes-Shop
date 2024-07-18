@@ -1,4 +1,4 @@
-package com.softuni.perfumes_shop.model.dto.outgoing;
+package com.softuni.perfumes_shop.model.dto.outbound;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,8 +9,11 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ViewProductDTO {
 
+    private Long id;
     private String name;
     private String description;
     private Double price;
     private boolean isInStock;
+    private String image;
+    private String productTypeName;
 }

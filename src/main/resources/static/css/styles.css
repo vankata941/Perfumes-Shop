@@ -116,3 +116,15 @@ body {
     color: var(--bs-primary);
     text-decoration: none;
 }
+
+.card-custom {
+    width: 70%;
+    height: auto;
+    margin: 0 auto;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.card-custom:hover {
+    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.5);
+    transform: scale(1.05);
+}

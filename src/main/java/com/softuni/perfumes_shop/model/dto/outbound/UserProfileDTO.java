@@ -1,4 +1,4 @@
-package com.softuni.perfumes_shop.model.dto.outgoing;
+package com.softuni.perfumes_shop.model.dto.outbound;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

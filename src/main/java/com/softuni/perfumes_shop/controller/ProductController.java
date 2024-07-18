@@ -1,7 +1,7 @@
 package com.softuni.perfumes_shop.controller;
 
-import com.softuni.perfumes_shop.model.dto.incoming.AddProductDTO;
-import com.softuni.perfumes_shop.model.dto.outgoing.ViewProductDTO;
+import com.softuni.perfumes_shop.model.dto.inbound.AddProductDTO;
+import com.softuni.perfumes_shop.model.dto.outbound.ViewProductDTO;
 import com.softuni.perfumes_shop.model.enums.ProductType;
 import com.softuni.perfumes_shop.service.ProductService;
 import com.softuni.perfumes_shop.service.exception.AuthorizationCheckException;
@@ -12,10 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Arrays;
@@ -90,5 +87,10 @@ public class ProductController {
         return "eau-de-toilette";
     }
 
-
+    @GetMapping("/product/{id}")
+    public String viewProduct(@PathVariable Long id, Model model) {
+        ViewProductDTO productDTO = productService.getProductById(id);
+        model.addAttribute("selectedProduct", productDTO);
+        return "view-product";
+    }
 }

@@ -1,9 +1,9 @@
 package com.softuni.perfumes_shop.service.impl;
 
-import com.softuni.perfumes_shop.model.dto.incoming.AddAuthorizationDTO;
-import com.softuni.perfumes_shop.model.dto.incoming.UserChangePasswordDTO;
-import com.softuni.perfumes_shop.model.dto.outgoing.UserProfileDTO;
-import com.softuni.perfumes_shop.model.dto.incoming.UserRegisterDTO;
+import com.softuni.perfumes_shop.model.dto.inbound.AddAuthorizationDTO;
+import com.softuni.perfumes_shop.model.dto.inbound.UserChangePasswordDTO;
+import com.softuni.perfumes_shop.model.dto.outbound.UserProfileDTO;
+import com.softuni.perfumes_shop.model.dto.inbound.UserRegisterDTO;
 import com.softuni.perfumes_shop.model.entity.Role;
 import com.softuni.perfumes_shop.model.entity.User;
 import com.softuni.perfumes_shop.model.enums.UserRole;

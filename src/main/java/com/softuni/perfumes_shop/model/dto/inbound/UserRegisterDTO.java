@@ -1,4 +1,4 @@
-package com.softuni.perfumes_shop.model.dto.incoming;
+package com.softuni.perfumes_shop.model.dto.inbound;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

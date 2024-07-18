@@ -1,6 +1,6 @@
 package com.softuni.perfumes_shop.controller;
 
-import com.softuni.perfumes_shop.model.dto.incoming.AddAuthorizationDTO;
+import com.softuni.perfumes_shop.model.dto.inbound.AddAuthorizationDTO;
 import com.softuni.perfumes_shop.model.enums.UserRole;
 import com.softuni.perfumes_shop.service.UserService;
 import com.softuni.perfumes_shop.service.exception.AuthorizationCheckException;

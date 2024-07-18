@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 
 @Configuration
@@ -27,7 +28,7 @@ public class SecurityConfig {
                         authorizeRequest -> {
                             authorizeRequest
                                     .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                                    .requestMatchers("/", "/user/login", "/user/login-error", "/user/register", "/about", "/contacts", "/products/all").permitAll()
+                                    .requestMatchers("/", "/user/login", "/user/login-error", "/user/register", "/about", "/contacts", "/products/all", "/products/product/{id}").permitAll()
                                     .anyRequest().authenticated();
                         }
                 )
@@ -45,6 +46,8 @@ public class SecurityConfig {
                             rememberMe.key("rememberMeForADay");
                             rememberMe.tokenValiditySeconds(86400);
                         }
+                )
+                .csrf(csrf -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 )
                 .logout(
                         logout -> {

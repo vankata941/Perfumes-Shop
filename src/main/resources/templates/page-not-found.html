@@ -9,7 +9,7 @@
 <div class="not-found-container text-center">
     <h1>404</h1>
     <p class="lead">Page Not Found</p>
-    <p>We're sorry, but the page you were looking for doesn't exist.</p>
+    <p th:text="${message}">We're sorry, but the page you were looking for doesn't exist.</p>
     <a th:href="@{/}" class="btn btn-primary">Please return to Homepage</a>
 </div>
 

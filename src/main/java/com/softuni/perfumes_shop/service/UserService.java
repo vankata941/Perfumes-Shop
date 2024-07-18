@@ -1,9 +1,9 @@
 package com.softuni.perfumes_shop.service;
 
-import com.softuni.perfumes_shop.model.dto.incoming.AddAuthorizationDTO;
-import com.softuni.perfumes_shop.model.dto.incoming.UserChangePasswordDTO;
-import com.softuni.perfumes_shop.model.dto.outgoing.UserProfileDTO;
-import com.softuni.perfumes_shop.model.dto.incoming.UserRegisterDTO;
+import com.softuni.perfumes_shop.model.dto.inbound.AddAuthorizationDTO;
+import com.softuni.perfumes_shop.model.dto.inbound.UserChangePasswordDTO;
+import com.softuni.perfumes_shop.model.dto.outbound.UserProfileDTO;
+import com.softuni.perfumes_shop.model.dto.inbound.UserRegisterDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 

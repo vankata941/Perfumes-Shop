@@ -15,7 +15,12 @@ public class I18NConfig {
 
     @Bean
     public LocaleResolver localeResolver() {
-        return new CookieLocaleResolver("lang");
+        CookieLocaleResolver localeResolver = new CookieLocaleResolver("lang");
+        localeResolver.setCookieHttpOnly(true); // Secure the locale cookie
+        localeResolver.setCookieSecure(true); // Use only over HTTPS
+        localeResolver.setCookiePath("/");
+        localeResolver.setCookieSameSite("Lax"); // Prevent cross-site cookie sending
+        return localeResolver;
     }
 
     @Bean

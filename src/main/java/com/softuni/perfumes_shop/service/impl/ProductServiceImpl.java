@@ -89,4 +89,16 @@ public class ProductServiceImpl implements ProductService {
 
         return mapProduct(optProduct.get());
     }
+
+    @Override
+    public void deleteProductById(Long id) {
+
+        productRepository.deleteById(id);
+    }
+
+    @Override
+    public String findNameOfProduct(Long id) {
+        Optional<Product> optProduct = productRepository.findById(id);
+        return optProduct.map(Product::getName).orElse(null);
+    }
 }

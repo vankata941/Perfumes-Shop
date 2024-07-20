@@ -13,4 +13,9 @@ public interface ProductService {
     List<ViewProductDTO> getAllProducts();
 
     ViewProductDTO getProductById(Long id);
+
+    void deleteProductById(Long id);
+
+    String findNameOfProduct(Long id);
+
 }

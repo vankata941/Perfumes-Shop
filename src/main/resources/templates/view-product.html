@@ -14,35 +14,57 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-6">
-                <img th:src="'data:image/jpeg;base64,' + ${selectedProduct.image}"
-                     th:alt="${selectedProduct.name}"
+                <img th:src="'data:image/jpeg;base64,' + ${product.image}"
+                     th:alt="${product.name}"
                      class="img-fluid" />
             </div>
             <div class="col-md-6">
-                <h1 th:text="${selectedProduct.name}">Product Name</h1>
-                <p class="text-muted" th:text="${selectedProduct.productTypeName}">Product Type</p>
-                <h3>$<span th:text="${selectedProduct.price}">0.00</span></h3>
+                <h1 th:text="${product.name}">Product Name</h1>
+                <p class="text-muted" th:text="${product.productTypeName}">Product Type</p>
+                <h3><span class="price" data-id="price-${product.id}" th:text="${product.price}">0.00</span></h3>
 
-                <p class="mt-3" style="font-size: 0.9em;">
-                        <span class="badge" th:class="${selectedProduct.inStock ? 'bg-success' : 'bg-danger'}"
+                <div class="mt-3 mb-3" style="font-size: 0.9em;">
+                        <span class="badge" th:class="${product.inStock ? 'bg-success' : 'bg-danger'}"
                               style="width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 5px;"></span>
-                    <span th:text="${selectedProduct.inStock ? 'Available' : 'Out of Stock'}"></span>
-                </p>
-
-                <button class="btn btn-primary mt-3">
+                    <span th:if="${product.inStock}" th:text="#{product_available}">Available</span>
+                    <span th:unless="${product.inStock}" th:text="#{product_out_of_stock}">Out of Stock</span>
+                </div>
+                <div th:if="${product.inStock}">
+                <button class="btn btn-primary mt-3"
+                        style="width: 200px"
+                        th:text="#{product_add_to_cart}"
+                >
 <!--                        th:onclick="'addToCart(' + ${product.id} + ')'">-->
                     Add to Cart
                 </button>
+                </div>
+                <div sec:authorize="isAuthenticated() && hasRole('ADMIN')">
+                <form
+                        th:action="@{/products/product/{id}(id = *{product.id})}"
+                        th:method="DELETE"
+                >
+                <button class="btn btn-primary mt-3"
+                        style="width: 200px"
+                        type="submit"
+                        th:text="#{product_delete}"
+                >
+                    Delete product
+                </button>
+                </form>
+                </div>
             </div>
+            <input type="hidden" class="priceInBGN" data-id="price-${product.id}" th:value="${product.price}">
+
         </div>
 
         <div class="row mt-4">
             <div class="col">
-                <h4>Description</h4>
-                <p th:text="${selectedProduct.description}">Product description goes here.</p>
+                <h4 th:text="#{product_description}">Description</h4>
+                <p th:text="${product.description}">Product description.</p>
             </div>
         </div>
     </div>
 </main>
+<footer th:replace="~{commons/footer::footer}"></footer>
 </body>
 </html>

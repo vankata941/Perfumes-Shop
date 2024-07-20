@@ -176,6 +176,16 @@
                 <option class="dropdown-item" value="bg_BG" th:selected="${#locale.toString()} == 'bg_BG'">БГ</option>
               </select>
             </form>
+            <div class="d-flex align-items-center mr-2">
+              <label for="currency" class="visually-hidden">Currency</label>
+              <select
+                      id="currency"
+                      class="form-select btn btn-outline-light no-arrow">
+                <option class="dropdown-item" th:value="BGN">BGN</option>
+                <option class="dropdown-item" value="EUR">EUR</option>
+                <option class="dropdown-item" value="USD">USD</option>
+              </select>
+            </div>
           </div>
         </div>
       </div>

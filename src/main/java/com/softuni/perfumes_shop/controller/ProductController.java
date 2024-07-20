@@ -7,6 +7,7 @@ import com.softuni.perfumes_shop.service.ProductService;
 import com.softuni.perfumes_shop.service.exception.AuthorizationCheckException;
 import com.softuni.perfumes_shop.service.session.CurrentUserDetails;
 import jakarta.persistence.NonUniqueResultException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -90,7 +91,23 @@ public class ProductController {
     @GetMapping("/product/{id}")
     public String viewProduct(@PathVariable Long id, Model model) {
         ViewProductDTO productDTO = productService.getProductById(id);
-        model.addAttribute("selectedProduct", productDTO);
+        model.addAttribute("product", productDTO);
         return "view-product";
+    }
+
+    @DeleteMapping("/product/{id}")
+    public String deleteProduct(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        if (!currentUserDetails.hasRole("ADMIN")) {
+            throw new AuthorizationCheckException();
+        }
+        String name = productService.findNameOfProduct(id);
+        productService.deleteProductById(id);
+
+        if (name != null) {
+            redirectAttributes.addFlashAttribute("successfullyDeleted", true);
+            redirectAttributes.addFlashAttribute("name", name);
+        }
+
+        return "redirect:/products/all";
     }
 }

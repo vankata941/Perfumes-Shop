@@ -1,5 +1,6 @@
 package com.softuni.perfumes_shop.controller;
 
+import com.softuni.perfumes_shop.service.exception.ApiObjectNotFoundException;
 import com.softuni.perfumes_shop.service.exception.AuthorizationCheckException;
 import com.softuni.perfumes_shop.service.exception.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,14 @@ public class GlobalExceptionHandler {
     @ResponseStatus(code = HttpStatus.NOT_FOUND)
     @ExceptionHandler(ObjectNotFoundException.class)
     public String handleObjectNotFoundException(ObjectNotFoundException e, Model model) {
+
+        model.addAttribute("message", e.getMessage());
+        return "page-not-found";
+    }
+
+    @ResponseStatus(code = HttpStatus.NOT_FOUND)
+    @ExceptionHandler(ApiObjectNotFoundException.class)
+    public String handleApiObjectNotFoundException(ApiObjectNotFoundException e, Model model) {
 
         model.addAttribute("message", e.getMessage());
         return "page-not-found";

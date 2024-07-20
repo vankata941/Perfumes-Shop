@@ -16,7 +16,7 @@
             th:action="@{/authorize}"
             th:method="POST"
     >
-        <h1 class="h3 mb-3 fw-normal">Add New Authorization</h1>
+        <h1 class="h3 my-4 fw-normal">Add authorization</h1>
         <div class="text-danger mb-2" style="font-size: 15px" th:if="${hasError}" th:text="${errorMessage}">Error occurred!</div>
 
         <div class="form-floating mb-3">
@@ -51,9 +51,9 @@
             <small class="invalid-feedback danger">You must select a role!</small>
             <label for="floatingUserRole"></label>
         </div>
-        <div class="d-grid gap-2">
-            <button class="btn btn-primary w-100 py-2" type="submit">Submit</button>
-        </div>
+
+        <button class="btn btn-primary w-100 my-3" type="submit">Submit</button>
+
     </form>
 </main>
 

@@ -19,8 +19,24 @@
                 th:method="POST"
                 enctype="multipart/form-data"
         >
-            <h1 class="h3 mb-3 fw-normal">Add Product</h1>
+            <h1 class="h3 my-4 fw-normal">Add Product</h1>
             <div class="text-danger mb-2" style="font-size: 15px" th:if="${hasError}" th:text="${errorMessage}">Error occurred!</div>
+            <div class="form-floating mb-3">
+                <input
+                        th:field="*{brand}"
+                        th:errorclass="is-invalid"
+                        name="brand"
+                        type="text"
+                        class="form-control"
+                        id="floatingBrand"
+                        placeholder="Brand"
+                        minlength="1"
+                        maxlength="30"
+                        required
+                >
+                <small class="invalid-feedback danger" style="font-size: 15px">Brand length must be between 1 and 30 characters!</small>
+                <label for="floatingBrand">Brand</label>
+            </div>
             <div class="form-floating mb-3">
                 <input
                         th:field="*{name}"
@@ -34,7 +50,7 @@
                         maxlength="30"
                         required
                 >
-                <small class="invalid-feedback danger" style="font-size: 15px">Brand length must be between 1 and 30 characters!</small>
+                <small class="invalid-feedback danger" style="font-size: 15px">Product name length must be between 1 and 30 characters!</small>
                 <label for="floatingName">Product name</label>
             </div>
             <div class="form-floating mb-3">
@@ -61,14 +77,14 @@
                         type="number"
                         class="form-control"
                         id="floatingPrice"
-                        placeholder="Price"
+                        placeholder="Price in BGN"
                         value=""
                         step="0.01"
                         min="0.01"
                         required
                 >
                 <small class="invalid-feedback danger" style="font-size: 15px">Please add price!</small>
-                <label for="floatingPrice">Price</label>
+                <label for="floatingPrice">Price in BGN</label>
             </div>
             <div class="form-floating mb-3">
                 <input
@@ -102,7 +118,7 @@
                 <label for="floatingType" class="visually-hidden">Types</label>
             </div>
             <div class="form-floating mb-3">
-                <div class="text-white label-holder d-flex">
+                <div class="label-holder d-flex">
                     <label for="floatingImage" class="h6 mb-2">Upload an image:</label>
                 </div>
                 <input
@@ -117,7 +133,7 @@
                 <small class="invalid-feedback danger">Please upload an image!</small>
             </div>
 
-            <button class="btn btn-primary w-100 py-2" type="submit">Add Product</button>
+            <button class="btn btn-primary w-100 my-3" type="submit">Add Product</button>
 
         </form>
     </main>

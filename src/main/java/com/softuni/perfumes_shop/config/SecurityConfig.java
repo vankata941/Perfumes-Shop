@@ -28,7 +28,7 @@ public class SecurityConfig {
                         authorizeRequest -> {
                             authorizeRequest
                                     .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                                    .requestMatchers("/", "/user/login", "/user/login-error", "/user/register", "/about", "/contacts", "/products/all", "/products/product/{id}").permitAll()
+                                    .requestMatchers("/", "/user/login", "/user/login-error", "/user/register", "/about", "/contacts", "/products/all", "/products/product/{id}", "/currency/convert").permitAll()
                                     .anyRequest().authenticated();
                         }
                 )

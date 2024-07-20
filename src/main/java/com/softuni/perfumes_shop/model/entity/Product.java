@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 
 @Getter
 @Setter
@@ -13,6 +15,9 @@ import lombok.Setter;
 @Table(name = "products")
 public class Product extends BaseEntity {
 
+    @Column(nullable = false)
+    private String brand;
+
     @Column(unique = true, nullable = false)
     private String name;
 
@@ -20,7 +25,7 @@ public class Product extends BaseEntity {
     private String description;
 
     @Column(nullable = false)
-    private Double price;
+    private BigDecimal price;
 
     @Column(nullable = false)
     private Integer stock;

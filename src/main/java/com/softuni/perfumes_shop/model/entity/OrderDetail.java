@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -15,15 +17,13 @@ import lombok.Setter;
 @Table(name = "order_details")
 public class OrderDetail extends BaseEntity {
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Order order;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Product product;
 
     @Column(nullable = false)
     private int quantity;
 
-    @Column(nullable = false)
-    private double price;
 }

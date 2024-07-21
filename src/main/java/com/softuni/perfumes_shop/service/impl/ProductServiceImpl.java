@@ -81,13 +81,18 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ViewProductDTO getProductById(Long id) {
+    public ViewProductDTO getViewProductById(Long id) {
+        return mapProduct(getProductById(id));
+    }
+
+    @Override
+    public Product getProductById(Long id) {
         Optional<Product> optProduct = productRepository.findById(id);
         if (optProduct.isEmpty()) {
-            throw new ObjectNotFoundException("Product with id " + id + " was not found!", id);
+            throw new ObjectNotFoundException("Product with id " + id + " was not found!");
         }
 
-        return mapProduct(optProduct.get());
+        return optProduct.get();
     }
 
     @Override

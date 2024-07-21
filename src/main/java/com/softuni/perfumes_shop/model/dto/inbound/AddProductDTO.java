@@ -35,6 +35,9 @@ public class AddProductDTO {
     @Min(value = 1)
     private Integer stock;
 
+    @NotBlank
+    private String packaging;
+
     @NotNull
     private String productTypeName;
 

@@ -21,22 +21,14 @@ public class Customer extends BaseEntity {
     @Column(nullable = false)
     private String lastName;
 
-    @ManyToOne
-    private User user;
-
-    @OneToMany(mappedBy = "customer")
-    private List<Address> addresses = new ArrayList<>();
-
-    @OneToMany(mappedBy = "customer")
-    private List<Order> orders = new ArrayList<>();
-
-    @OneToOne
-    private Cart cart;
+    @Column(nullable = false)
+    private String email;
 
     @Column(nullable = false)
     private String phoneNumber;
 
-    @Column(nullable = false)
-    private String paymentMethod;
+    @ManyToOne(optional = false)
+    private User user;
+
 }
 

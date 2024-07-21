@@ -12,10 +12,12 @@ import java.math.BigDecimal;
 public class ViewProductDTO {
 
     private Long id;
+    private String brand;
     private String name;
     private String description;
     private BigDecimal price;
     private boolean isInStock;
+    private String packaging;
     private String image;
     private String productTypeName;
 }

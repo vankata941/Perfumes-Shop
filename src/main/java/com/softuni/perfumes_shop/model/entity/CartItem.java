@@ -10,17 +10,20 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @Entity
 @Table(name = "cart_items")
 public class CartItem extends BaseEntity {
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Cart cart;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Product product;
 
-    @Column
+    @Column(nullable = false)
     private int quantity;
+
+    public CartItem() {
+        this.quantity = 1;
+    }
 }

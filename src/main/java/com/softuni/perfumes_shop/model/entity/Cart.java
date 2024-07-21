@@ -16,10 +16,11 @@ import java.util.List;
 @Table(name = "carts")
 public class Cart extends BaseEntity {
 
-    @OneToOne
-    private Customer customer;
-
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
     private List<CartItem> cartItems = new ArrayList<>();
+
+    public void addCartItem(CartItem cartItem) {
+        this.cartItems.add(cartItem);
+    }
 
 }

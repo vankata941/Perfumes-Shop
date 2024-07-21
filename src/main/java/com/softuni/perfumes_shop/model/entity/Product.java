@@ -30,6 +30,9 @@ public class Product extends BaseEntity {
     @Column(nullable = false)
     private Integer stock;
 
+    @Column(nullable = false)
+    private String packaging;
+
     @ManyToOne(optional = false)
     private Type type;
 

@@ -11,6 +11,8 @@
 <header th:replace="~{commons/header::header}"></header>
 
 <main>
+    <div class="mt-3 text-center" style="font-size: 25px" th:if="${isAdded}" th:text="#{product_added_to_cart}">Successfully added product to the cart!</div>
+    <div class="mt-3 text-center" style="font-size: 25px" th:if="${isNotAdded}" th:text="#{product_is_already_in_cart}">Product is already in the cart!</div>
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-6">
@@ -19,7 +21,9 @@
                      class="img-fluid" />
             </div>
             <div class="col-md-6">
+                <h2 th:text="${product.brand}">Product Brand</h2>
                 <h1 th:text="${product.name}">Product Name</h1>
+                <p class="text-muted"><span th:text="${product.packaging}">Product Packaging</span> <span th:text="#{product_packaging}">ml.</span></p>
                 <p class="text-muted" th:text="${product.productTypeName}">Product Type</p>
                 <h3><span class="price" data-id="price-${product.id}" th:text="${product.price}">0.00</span></h3>
 
@@ -29,18 +33,23 @@
                     <span th:if="${product.inStock}" th:text="#{product_available}">Available</span>
                     <span th:unless="${product.inStock}" th:text="#{product_out_of_stock}">Out of Stock</span>
                 </div>
+
                 <div th:if="${product.inStock}">
-                <button class="btn btn-primary mt-3"
-                        style="width: 200px"
-                        th:text="#{product_add_to_cart}"
-                >
-<!--                        th:onclick="'addToCart(' + ${product.id} + ')'">-->
-                    Add to Cart
-                </button>
+                    <form
+                            th:action="@{/cart/add-product/{id}(id = *{product.id})}"
+                            th:method="POST"
+                    >
+                        <button class="btn btn-primary mt-3"
+                                style="width: 200px"
+                                th:text="#{product_add_to_cart}"
+                        >
+                            Add to Cart
+                        </button>
+                    </form>
                 </div>
                 <div sec:authorize="isAuthenticated() && hasRole('ADMIN')">
                 <form
-                        th:action="@{/products/product/{id}(id = *{product.id})}"
+                        th:action="@{/products/product/delete/{id}(id = *{product.id})}"
                         th:method="DELETE"
                 >
                 <button class="btn btn-primary mt-3"

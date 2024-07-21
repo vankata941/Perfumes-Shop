@@ -90,12 +90,12 @@ public class ProductController {
 
     @GetMapping("/product/{id}")
     public String viewProduct(@PathVariable Long id, Model model) {
-        ViewProductDTO productDTO = productService.getProductById(id);
+        ViewProductDTO productDTO = productService.getViewProductById(id);
         model.addAttribute("product", productDTO);
         return "view-product";
     }
 
-    @DeleteMapping("/product/{id}")
+    @DeleteMapping("/product/delete/{id}")
     public String deleteProduct(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         if (!currentUserDetails.hasRole("ADMIN")) {
             throw new AuthorizationCheckException();

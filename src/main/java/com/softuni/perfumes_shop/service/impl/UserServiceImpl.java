@@ -4,10 +4,12 @@ import com.softuni.perfumes_shop.model.dto.inbound.AddAuthorizationDTO;
 import com.softuni.perfumes_shop.model.dto.inbound.UserChangePasswordDTO;
 import com.softuni.perfumes_shop.model.dto.outbound.UserProfileDTO;
 import com.softuni.perfumes_shop.model.dto.inbound.UserRegisterDTO;
+import com.softuni.perfumes_shop.model.entity.Cart;
 import com.softuni.perfumes_shop.model.entity.Role;
 import com.softuni.perfumes_shop.model.entity.User;
 import com.softuni.perfumes_shop.model.enums.UserRole;
 import com.softuni.perfumes_shop.repository.UserRepository;
+import com.softuni.perfumes_shop.service.CartService;
 import com.softuni.perfumes_shop.service.RoleService;
 import com.softuni.perfumes_shop.service.UserService;
 import com.softuni.perfumes_shop.service.session.CurrentUserDetails;
@@ -31,6 +33,7 @@ public class UserServiceImpl implements UserService {
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
     private final RoleService roleService;
+    private final CartService cartService;
 
 
     @Override
@@ -45,11 +48,14 @@ public class UserServiceImpl implements UserService {
         }
 
         User user = modelMapper.map(registerData, User.class);
+        Cart cart = new Cart();
+        user.setCart(cart);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         Optional<Role> optRole = roleService.findByUserRole(UserRole.USER);
         optRole.ifPresent(user::addRole);
 
-        this.userRepository.save(user);
+        cartService.addNewCart(cart);
+        userRepository.save(user);
 
     }
 

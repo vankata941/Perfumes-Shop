@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,20 +17,20 @@ import java.util.List;
 @Table(name = "orders")
 public class Order extends BaseEntity {
 
-    @ManyToOne
+    @OneToOne(optional = false)
     private Customer customer;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Address address;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderDetail> orderDetails = new ArrayList<>();
 
     @Column(nullable = false)
-    private LocalDateTime orderDate;
+    private LocalDateTime orderDate = LocalDateTime.now();
 
     @Column(nullable = false)
-    private double totalAmount;
+    private BigDecimal totalAmount;
 
     @Column(nullable = false)
     private String status;

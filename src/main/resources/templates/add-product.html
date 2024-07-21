@@ -102,6 +102,20 @@
                 <label for="floatingStock">Stock</label>
             </div>
             <div class="form-floating mb-3">
+                <input
+                        th:field="*{packaging}"
+                        th:errorclass="is-invalid"
+                        name="packaging"
+                        type="text"
+                        class="form-control"
+                        id="floatingPackaging"
+                        placeholder="Packaging"
+                        required
+                >
+                <small class="invalid-feedback danger" style="font-size: 15px">Packaging is required!</small>
+                <label for="floatingPackaging">Packaging in ml.</label>
+            </div>
+            <div class="form-floating mb-3">
                     <select
                             th:field="*{productTypeName}"
                             th:errorclass="is-invalid"

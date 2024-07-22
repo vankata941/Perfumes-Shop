@@ -73,8 +73,7 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
         }
     }
 
-    @Override
-    public Optional<BigDecimal> findExchangeRate(String from, String to) {
+    private Optional<BigDecimal> findExchangeRate(String from, String to) {
         if (from.equals(to)) {
             return Optional.of(BigDecimal.ONE);
         }

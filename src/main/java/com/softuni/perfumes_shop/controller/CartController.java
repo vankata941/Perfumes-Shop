@@ -74,4 +74,24 @@ public class CartController {
 
         return "redirect:/cart";
     }
+
+    @PostMapping("/cart-item/{id}")
+    public String changeProductQuantity(
+            @PathVariable Long id,
+            @RequestParam("quantity") int quantity,
+            RedirectAttributes redirectAttributes
+    ) {
+        if (!currentUserDetails.isAuthenticated()) {
+            return "redirect:/login";
+        }
+
+        try {
+            cartService.changeQuantityById(id, quantity);
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("hasError", true);
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+        }
+
+        return "redirect:/cart";
+    }
 }

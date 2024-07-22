@@ -17,4 +17,6 @@ public interface CartService {
     BigDecimal getSubtotal();
 
     void removeCartItem(Long id);
+
+    void changeQuantityById(Long id, int quantity);
 }

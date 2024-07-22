@@ -37,11 +37,12 @@
                                     <form
                                             th:action="@{/cart/cart-item/{id}(id = *{cartItem.id})}"
                                             th:method="POST"
-                                            onchange="this.form.submit()"
+                                            onchange="this.submit()"
                                     >
                                     <label class="mb-2" for="quantitySelector">Quantity:</label>
                                     <input
                                             id="quantitySelector"
+                                            name="quantity"
                                             th:value="${cartItem.quantity}"
                                             type="number"
                                             class="form-control mr-2"
@@ -51,6 +52,7 @@
                                     >
                                     </form>
                                 </div>
+                                <div class="mb-2" style="font-size: 15px" th:if="${hasError}" th:text="${errorMessage}">Quantity must be greater than 0!</div>
                             </div>
                         </div>
                         <div class="d-flex flex-column align-items-end">

@@ -24,7 +24,7 @@ public class UserRegisterDTO {
     @Size(min = 2, max = 20)
     private String lastName;
 
-    @Email
+    @Email(regexp = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")
     @NotBlank
     private String email;
 

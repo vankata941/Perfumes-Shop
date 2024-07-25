@@ -19,4 +19,12 @@ public interface CartService {
     void removeCartItem(Long id);
 
     void changeQuantityById(Long id, int quantity);
+
+    boolean containsProductWithId(Long id);
+
+    BigDecimal getShippingPrice();
+
+    BigDecimal getTotalPrice();
+
+    void emptyCart(Long id);
 }

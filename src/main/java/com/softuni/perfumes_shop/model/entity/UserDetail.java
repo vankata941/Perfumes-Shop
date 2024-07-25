@@ -12,8 +12,8 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "customers")
-public class Customer extends BaseEntity {
+@Table(name = "user_details")
+public class UserDetail extends BaseEntity {
 
     @Column(nullable = false)
     private String firstName;
@@ -22,13 +22,11 @@ public class Customer extends BaseEntity {
     private String lastName;
 
     @Column(nullable = false)
-    private String email;
-
-    @Column(nullable = false)
     private String phoneNumber;
 
-    @ManyToOne(optional = false)
+    @OneToMany(mappedBy = "userDetail")
+    private List<Order> orders = new ArrayList<>();
+
+    @ManyToOne
     private User user;
-
 }
-

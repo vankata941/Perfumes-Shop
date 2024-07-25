@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head th:replace="~{commons/head::head}">
+  <script>
+    function formatCardNumber(event) {
+      const input = event.target;
+      const value = input.value.replace(/\D/g, '');
+      const formattedValue = value.match(/.{1,4}/g)?.join(' ') || '';
+      input.value = formattedValue;
+    }
+  </script>
+</head>
+
+<body>
+
+<header th:replace="~{commons/header::header}"></header>
+
+<main>
+<div class="container d-flex justify-content-center align-items-center full-height">
+  <div class="w-100" style="max-width: 800px;">
+    <div class="my-4">
+      <h2>Order details</h2>
+    </div>
+    <div class="col-md-12 col-lg-12">
+        <form
+                th:object="${orderData}"
+                th:action="@{/order/create}"
+                th:method="POST"
+        >
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <label for="firstName" class="form-label">First name</label>
+              <input
+                      th:field="*{firstName}"
+                      th:errorclass="is-invalid"
+                      name="firstName"
+                      type="text"
+                      class="form-control"
+                      id="firstName"
+                      minlength="2"
+                      maxlength="20"
+                      required
+              >
+              <div class="invalid-feedback">
+                First name must be between 2 and 20 characters!
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <label for="lastName" class="form-label">Last name</label>
+              <input
+                      th:field="*{lastName}"
+                      th:errorclass="is-invalid"
+                      name="lastName"
+                      type="text"
+                      class="form-control"
+                      id="lastName"
+                      minlength="2"
+                      maxlength="20"
+                      required
+              >
+              <div class="invalid-feedback">
+                Last name must be between 2 and 20 characters!
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label for="address" class="form-label">Shipping address</label>
+              <input
+                      th:field="*{shippingAddress}"
+                      th:errorclass="is-invalid"
+                      name="shippingAddress"
+                      type="text"
+                      class="form-control"
+                      id="address"
+                      required
+              >
+              <div class="invalid-feedback">
+                Please enter your shipping address!
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label for="phone" class="form-label">Phone number</label>
+              <input
+                      th:field="*{phoneNumber}"
+                      th:errorclass="is-invalid"
+                      name="phoneNumber"
+                      type="text"
+                      class="form-control"
+                      id="phone"
+                      required
+              >
+              <div class="invalid-feedback">
+                Please enter a phone number!
+              </div>
+            </div>
+
+            <div class="col-md-5">
+              <label for="country" class="form-label">Country</label>
+              <select
+                      th:field="*{country}"
+                      th:errorclass="is-invalid"
+                      name="country"
+                      class="form-select"
+                      id="country"
+                      required
+              >
+                <option value="">Select Country</option>
+                <option th:value="Bulgaria">Bulgaria</option>
+              </select>
+              <div class="invalid-feedback">
+                Please select a country!
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <label for="city" class="form-label">City</label>
+              <input
+                      th:field="*{city}"
+                      th:errorclass="is-invalid"
+                      name="city"
+                      type="text"
+                      class="form-control"
+                      id="city"
+                      required
+              >
+              <div class="invalid-feedback">
+                City is required!
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <label for="postalCode" class="form-label">Postal code</label>
+              <input
+                      th:field="*{postalCode}"
+                      th:errorclass="is-invalid"
+                      name="postalCode"
+                      type="text"
+                      class="form-control"
+                      id="postalCode"
+                      minlength="4"
+                      maxlength="4"
+                      required
+              >
+              <div class="invalid-feedback">
+                Postal code required!
+              </div>
+            </div>
+          </div>
+
+          <hr class="my-4">
+
+          <h4 class="mb-3">Payment</h4>
+
+          <div class="row gy-3">
+            <div class="col-md-6">
+              <label for="cardHolder" class="form-label">Card holder</label>
+              <input
+                      th:field="*{cardHolder}"
+                      th:errorclass="is-invalid"
+                      name="cardHolder"
+                      type="text"
+                      class="form-control"
+                      id="cardHolder"
+                      required
+              >
+              <small class="text-body-secondary">Full name as displayed on card</small>
+              <div class="invalid-feedback">
+                Card holder name is required!
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="cardNumber" class="form-label">Card number</label>
+              <input
+                      th:field="*{cardNumber}"
+                      th:errorclass="is-invalid"
+                      name="cardNumber"
+                      type="text"
+                      class="form-control"
+                      id="cardNumber"
+                      minlength="19"
+                      maxlength="19"
+                      required
+                      oninput="formatCardNumber(event)"
+              >
+              <div class="invalid-feedback">
+                Card number is required!
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <label for="cardExpiration" class="form-label">Expiration</label>
+              <input
+                      th:field="*{cardExpiration}"
+                      th:errorclass="is-invalid"
+                      name="cardExpiration"
+                      type="text"
+                      class="form-control"
+                      id="cardExpiration"
+                      placeholder="MM/YY"
+                      minlength="5"
+                      maxlength="5"
+                      required
+              >
+              <div class="invalid-feedback">
+                Expiration date required!
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <label for="securityCode" class="form-label">CVV</label>
+              <input
+                      th:field="*{securityCode}"
+                      th:errorclass="is-invalid"
+                      name="securityCode"
+                      type="text"
+                      class="form-control"
+                      id="securityCode"
+                      placeholder="123"
+                      minlength="3"
+                      maxlength="3"
+                      required
+              >
+              <div class="invalid-feedback">
+                Security code required!
+              </div>
+            </div>
+          </div>
+
+          <hr class="my-4">
+
+          <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
+        </form>
+      </div>
+  </div>
+    </div>
+  </main>
+<footer th:replace="~{commons/footer::footer}"></footer>
+</body>
+</html>

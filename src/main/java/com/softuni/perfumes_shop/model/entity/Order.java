@@ -1,5 +1,6 @@
 package com.softuni.perfumes_shop.model.entity;
 
+import com.softuni.perfumes_shop.model.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,10 +17,13 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "orders")
-public class Order extends BaseEntity {
+public class Order {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @OneToOne(optional = false)
-    private Customer customer;
+    @ManyToOne(optional = false)
+    private UserDetail userDetail;
 
     @ManyToOne(optional = false)
     private Address address;
@@ -26,12 +31,17 @@ public class Order extends BaseEntity {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderDetail> orderDetails = new ArrayList<>();
 
+    @ManyToOne
+    private PaymentDetail paymentDetail;
+
     @Column(nullable = false)
-    private LocalDateTime orderDate = LocalDateTime.now();
+    // @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
+    private String orderCreatedDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
 
     @Column(nullable = false)
     private BigDecimal totalAmount;
 
     @Column(nullable = false)
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private OrderStatus orderStatus;
 }

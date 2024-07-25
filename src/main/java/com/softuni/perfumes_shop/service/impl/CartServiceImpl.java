@@ -1,10 +1,8 @@
 package com.softuni.perfumes_shop.service.impl;
 
 import com.softuni.perfumes_shop.model.dto.outbound.ViewCartItemDTO;
-import com.softuni.perfumes_shop.model.entity.Cart;
-import com.softuni.perfumes_shop.model.entity.CartItem;
-import com.softuni.perfumes_shop.model.entity.Product;
-import com.softuni.perfumes_shop.model.entity.User;
+import com.softuni.perfumes_shop.model.entity.*;
+import com.softuni.perfumes_shop.repository.CartItemRepository;
 import com.softuni.perfumes_shop.repository.CartRepository;
 import com.softuni.perfumes_shop.service.CartItemService;
 import com.softuni.perfumes_shop.service.CartService;
@@ -12,7 +10,6 @@ import com.softuni.perfumes_shop.service.ProductService;
 import com.softuni.perfumes_shop.service.exception.ObjectNotFoundException;
 import com.softuni.perfumes_shop.service.session.CurrentUserDetails;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.ObjectDeletedException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +26,7 @@ public class CartServiceImpl implements CartService {
     private final CurrentUserDetails currentUserDetails;
     private final ModelMapper modelMapper;
     private final CartItemService cartItemService;
+    private final CartItemRepository cartItemRepository;
 
     @Override
     @Transactional
@@ -146,6 +144,59 @@ public class CartServiceImpl implements CartService {
             }
         }
 
+    }
+
+    @Override
+    @Transactional
+    public boolean containsProductWithId(Long id) {
+        List<List<CartItem>> list = cartRepository.findAll()
+                .stream()
+                .map(Cart::getCartItems)
+                .toList();
+
+        for (List<CartItem> cartItems : list) {
+            Optional<Long> first = cartItems.stream()
+                    .map(cartItem -> cartItem.getProduct().getId())
+                    .filter(productId -> productId.equals(id))
+                    .findFirst();
+
+            if (first.isPresent()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public BigDecimal getShippingPrice() {
+        return BigDecimal.valueOf(10);
+    }
+
+    @Override
+    @Transactional
+    public BigDecimal getTotalPrice() {
+        BigDecimal subtotal = getSubtotal();
+        BigDecimal shippingPrice = getShippingPrice();
+
+        return subtotal.add(shippingPrice);
+    }
+
+    @Override
+    public void emptyCart(Long id) {
+        Optional<Cart> optCart = cartRepository.findById(id);
+
+        if (optCart.isPresent()) {
+            Cart cart = optCart.get();
+
+            for (CartItem cartItem : cart.getCartItems()) {
+
+                cartItemRepository.deleteById(cartItem.getId());
+            }
+
+            cart.getCartItems().clear();
+
+            cartRepository.save(cart);
+        }
     }
 
     private ViewCartItemDTO mapProduct(CartItem cartItem) {

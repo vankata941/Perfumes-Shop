@@ -39,12 +39,16 @@ public class User extends BaseEntity {
     private List<Role> roles = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    private List<Customer> customers = new ArrayList<>();
+    private List<UserDetail> userDetails = new ArrayList<>();
 
     @OneToOne(optional = false)
     private Cart cart;
 
     public void addRole(Role role) {
         this.roles.add(role);
+    }
+
+    public void addUserDetail(UserDetail userDetail) {
+        this.userDetails.add(userDetail);
     }
 }

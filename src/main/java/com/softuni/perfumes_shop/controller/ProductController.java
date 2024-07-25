@@ -3,6 +3,7 @@ package com.softuni.perfumes_shop.controller;
 import com.softuni.perfumes_shop.model.dto.inbound.AddProductDTO;
 import com.softuni.perfumes_shop.model.dto.outbound.ViewProductDTO;
 import com.softuni.perfumes_shop.model.enums.ProductType;
+import com.softuni.perfumes_shop.service.CartService;
 import com.softuni.perfumes_shop.service.ProductService;
 import com.softuni.perfumes_shop.service.exception.AuthorizationCheckException;
 import com.softuni.perfumes_shop.service.session.CurrentUserDetails;
@@ -25,6 +26,7 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
+    private final CartService cartService;
     private final CurrentUserDetails currentUserDetails;
 
     @ModelAttribute("productData")
@@ -99,6 +101,12 @@ public class ProductController {
     public String deleteProduct(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         if (!currentUserDetails.hasRole("ADMIN")) {
             throw new AuthorizationCheckException();
+        }
+
+        if (cartService.containsProductWithId(id)) {
+            redirectAttributes.addFlashAttribute("isMarkedForBuying", true);
+
+            return "redirect:/products/product/{id}";
         }
         String name = productService.findNameOfProduct(id);
         productService.deleteProductById(id);

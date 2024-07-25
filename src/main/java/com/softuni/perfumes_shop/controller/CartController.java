@@ -36,8 +36,8 @@ public class CartController {
         BigDecimal totalPrice = BigDecimal.ZERO;
 
         if (!Objects.equals(subtotal, BigDecimal.ZERO)) {
-            shipping = BigDecimal.valueOf(10);
-            totalPrice = subtotal.add(shipping);
+            shipping = cartService.getShippingPrice();
+            totalPrice = cartService.getTotalPrice();
         }
         model.addAttribute("shipping", shipping);
         model.addAttribute("totalPrice", totalPrice);

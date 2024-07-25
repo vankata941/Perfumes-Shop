@@ -12,20 +12,20 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "addresses")
-public class Address extends BaseEntity {
+@Table(name = "payment_details")
+public class PaymentDetail extends BaseEntity {
 
     @Column(nullable = false)
-    private String country;
+    private String cardHolder;
+
+    @Column(unique = true, nullable = false)
+    private String cardNumber;
 
     @Column(nullable = false)
-    private String city;
+    private String cardExpiration;
 
     @Column(nullable = false)
-    private String shippingAddress;
+    private String securityCode;
 
-    @Column(nullable = false)
-    private String postalCode;
 
 }
-

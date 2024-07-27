@@ -23,6 +23,10 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public void uploadImage(MultipartFile file) {
 
+        if (file.isEmpty()) {
+            throw new IllegalArgumentException("Please upload an image!");
+        }
+
         if (file.getOriginalFilename() == null || file.getOriginalFilename().isEmpty()) {
             throw new IllegalArgumentException("Invalid file");
         }

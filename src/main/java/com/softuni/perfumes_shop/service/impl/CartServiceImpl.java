@@ -130,19 +130,18 @@ public class CartServiceImpl implements CartService {
         if (quantity <= 0) {
             throw new IllegalArgumentException("Quantity must be greater than zero!");
         }
-        if (quantity != 1) {
-            Optional<User> optUser = currentUserDetails.optCurrentUser();
-            if (optUser.isPresent()) {
-                User user = optUser.get();
-                Cart cart = user.getCart();
-                for (CartItem cartItem : cart.getCartItems()) {
-                    if (Objects.equals(cartItem.getId(), id)) {
-                        cartItem.setQuantity(quantity);
-                    }
+        Optional<User> optUser = currentUserDetails.optCurrentUser();
+        if (optUser.isPresent()) {
+            User user = optUser.get();
+            Cart cart = user.getCart();
+            for (CartItem cartItem : cart.getCartItems()) {
+                if (Objects.equals(cartItem.getId(), id)) {
+                    cartItem.setQuantity(quantity);
                 }
-                cartRepository.save(cart);
             }
+            cartRepository.save(cart);
         }
+
 
     }
 

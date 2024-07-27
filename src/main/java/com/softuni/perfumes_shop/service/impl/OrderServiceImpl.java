@@ -1,6 +1,8 @@
 package com.softuni.perfumes_shop.service.impl;
 
 import com.softuni.perfumes_shop.model.dto.inbound.CreateOrderDTO;
+import com.softuni.perfumes_shop.model.dto.outbound.ViewOrderDTO;
+import com.softuni.perfumes_shop.model.dto.outbound.ViewOrderDetailDTO;
 import com.softuni.perfumes_shop.model.entity.*;
 import com.softuni.perfumes_shop.model.enums.OrderStatus;
 import com.softuni.perfumes_shop.repository.OrderRepository;
@@ -11,6 +13,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,6 +58,54 @@ public class OrderServiceImpl implements OrderService {
 
             cartService.emptyCart(user.getCart().getId());
         }
+    }
+
+    @Override
+    @Transactional
+    public List<ViewOrderDTO> getAllOrdersByUser() {
+        List<ViewOrderDTO> viewOrders = new ArrayList<>();
+
+        Optional<User> optUser = currentUserDetails.optCurrentUser();
+        if (optUser.isPresent()) {
+            List<UserDetail> userDetails = optUser.get().getUserDetails();
+
+            for (UserDetail userDetail : userDetails) {
+                List<Order> allByUserDetailId = orderRepository.findAllByUserDetailId(userDetail.getId());
+                for (Order order : allByUserDetailId) {
+                    ViewOrderDTO viewOrderDTO = new ViewOrderDTO();
+                    viewOrderDTO.setId(order.getId());
+                    viewOrderDTO.setFirstName(order.getUserDetail().getFirstName());
+                    viewOrderDTO.setLastName(order.getUserDetail().getLastName());
+                    viewOrderDTO.setOrderStatus(order.getOrderStatus().getName());
+                    viewOrderDTO.setTotalAmount(order.getTotalAmount());
+
+                    List<ViewOrderDetailDTO> viewOrderDetailList = mapOrderDetailDTO(order);
+                    viewOrderDTO.setOrderDetails(viewOrderDetailList);
+
+                    viewOrders.add(viewOrderDTO);
+                }
+            }
+        }
+
+        return viewOrders;
+    }
+
+    private List<ViewOrderDetailDTO> mapOrderDetailDTO(Order order) {
+        List<ViewOrderDetailDTO> viewOrderDetailList = new ArrayList<>();
+
+        List<OrderDetail> orderDetails = order.getOrderDetails();
+        for (OrderDetail orderDetail : orderDetails) {
+            ViewOrderDetailDTO viewOrderDetailDTO = new ViewOrderDetailDTO();
+            viewOrderDetailDTO.setBrand(orderDetail.getProduct().getBrand());
+            viewOrderDetailDTO.setName(orderDetail.getProduct().getName());
+            viewOrderDetailDTO.setQuantity(orderDetail.getQuantity());
+            viewOrderDetailDTO.setPackaging(orderDetail.getProduct().getPackaging());
+            if (orderDetail.getProduct().getImage() != null) {
+                viewOrderDetailDTO.setImage(Base64.getEncoder().encodeToString(orderDetail.getProduct().getImage().getImage()));
+            }
+            viewOrderDetailList.add(viewOrderDetailDTO);
+        }
+        return viewOrderDetailList;
     }
 
     private UserDetail mapUserDetail(CreateOrderDTO orderData, User user) {

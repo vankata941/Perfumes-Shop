@@ -47,16 +47,17 @@ public class ProductServiceImpl implements ProductService {
             throw new IllegalArgumentException("Invalid product type");
         }
 
-        if (!productData.getImage().isEmpty() && productData.getImage() != null) {
-            imageService.uploadImage(productData.getImage());
-            Optional<Image> optImage = imageService.findByName(productData.getImage().getOriginalFilename());
-            if (optImage.isPresent()) {
-                product.setImage(optImage.get());
-            } else {
-                imageService.deleteImage(productData.getImage().getOriginalFilename());
-                throw new IllegalArgumentException("Invalid image");
-            }
+
+        imageService.uploadImage(productData.getImage());
+
+        Optional<Image> optImage = imageService.findByName(productData.getImage().getOriginalFilename());
+        if (optImage.isPresent()) {
+            product.setImage(optImage.get());
+        } else {
+            imageService.deleteImage(productData.getImage().getOriginalFilename());
+            throw new IllegalArgumentException("Invalid image");
         }
+
 
         productRepository.save(product);
     }

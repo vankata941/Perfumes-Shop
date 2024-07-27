@@ -23,9 +23,7 @@ public class CartController {
 
     @GetMapping
     public String viewCart(Model model) {
-        if (!currentUserDetails.isAuthenticated()) {
-            return "redirect:/login";
-        }
+
         List<ViewCartItemDTO> cartItems = cartService.getAllCartItems();
         model.addAttribute("cartItems", cartItems);
 
@@ -50,9 +48,7 @@ public class CartController {
             @PathVariable Long id,
             RedirectAttributes redirectAttributes
     ) {
-        if (!currentUserDetails.isAuthenticated()) {
-            return "redirect:/login";
-        }
+
         boolean isAdded = cartService.addItemToCart(id);
 
         if (isAdded) {
@@ -66,9 +62,6 @@ public class CartController {
 
     @DeleteMapping("/delete/cart-item/{id}")
     public String removeCartItem(@PathVariable Long id) {
-        if (!currentUserDetails.isAuthenticated()) {
-            return "redirect:/login";
-        }
 
         cartService.removeCartItem(id);
 
@@ -81,9 +74,6 @@ public class CartController {
             @RequestParam("quantity") int quantity,
             RedirectAttributes redirectAttributes
     ) {
-        if (!currentUserDetails.isAuthenticated()) {
-            return "redirect:/login";
-        }
 
         try {
             cartService.changeQuantityById(id, quantity);

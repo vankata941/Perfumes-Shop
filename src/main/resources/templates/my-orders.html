@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+
+<head th:replace="~{commons/head::head}"></head>
+
+<body>
+
+<header th:replace="~{commons/header::header}"></header>
+    <div class="container mt-5">
+        <h2 class="mb-4 text-center">Order Details</h2>
+        <div class="mt-3 text-center" style="font-size: 25px" th:if="${orders.size() == 0}">No current orders.</div>
+        <div
+                class="order-details border p-3 mb-4"
+                th:each="order : ${orders}"
+        >
+            <div class="card mb-3">
+                <div class="card-body order-info">
+                    <h5 class="card-title">Order Information</h5>
+                    <p class="card-text mb-1"><strong>Order ID: </strong><span th:text="${order.id}"></span></p>
+                    <p class="card-text mb-1"><strong>First Name: </strong><span th:text="${order.firstName}"></span></p>
+                    <p class="card-text mb-1"><strong>Last Name: </strong><span th:text="${order.lastName}"></span></p>
+                    <p class="card-text mb-1"><strong>Amount: </strong><span class="price" data-id="price-${order.id}" th:text="${order.totalAmount}">0.00</span></p>
+                    <p class="card-text mb-1"><strong>Status: </strong><span th:text="${order.orderStatus}"></span></p>
+                </div>
+                <input type="hidden" class="priceInBGN" data-id="price-${order.id}" th:value="${order.totalAmount}">
+            </div>
+    
+
+            <h5>Products</h5>
+            <table class="table table-bordered mt-3">
+                <thead>
+                    <tr>
+                        <th>Picture</th>
+                        <th>Brand</th>
+                        <th>Name</th>
+                        <th>Packaging</th>
+                        <th>Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr
+                            th:each="orderDetail : ${order.orderDetails}"
+                    >
+                        <td>
+                            <img th:src="'data:image/jpeg;base64,' + ${orderDetail.image}"
+                                  th:alt="${orderDetail.name}"
+                                  class="img-thumbnail me-3"
+                                  style="width: 100px; height: 100px;"
+                        />
+                        </td>
+                        <td th:text="${orderDetail.brand}"></td>
+                        <td th:text="${orderDetail.name}"></td>
+                        <td th:text="${orderDetail.packaging}"></td>
+                        <td th:text="${orderDetail.quantity}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+<footer th:replace="~{commons/footer::footer}"></footer>
+</body>
+</html>

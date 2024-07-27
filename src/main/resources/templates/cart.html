@@ -32,7 +32,7 @@
                             <div>
                                 <h5 class="mb-1" th:text="${cartItem.brand}">Product Brand</h5>
                                 <p class="mb-1" th:text="${cartItem.name}">Product Name</p>
-                                <p class="mb-1"><span th:text="${cartItem.packaging}">Product Packaging</span> <span th:text="#{product_packaging}">ml.</span></p>
+                                <p class="mb-1"><span th:text="${cartItem.getPackaging}">Product Packaging</span> <span th:text="#{product_packaging}">ml.</span></p>
                                 <div class="d-flex align-items-center">
                                     <form
                                             th:action="@{/cart/cart-item/{id}(id = *{cartItem.id})}"

@@ -18,4 +18,6 @@ public class OrderConfirmationDTO {
 
     private String phoneNumber;
 
+    private String orderCreatedDate;
+
 }

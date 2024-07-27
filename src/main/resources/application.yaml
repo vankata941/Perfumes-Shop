@@ -38,3 +38,8 @@ forex:
     key: ${FOREX_API_KEY:}
     url: "https://openexchangerates.org/api/latest.json?app_id={app_id}"
     base: "USD"
+
+shipping:
+  api:
+#    baseUrl: "${SHIPPING_BASE_URL:http://localhost:8081}"
+    baseUrl: "http://localhost:8081{path}"

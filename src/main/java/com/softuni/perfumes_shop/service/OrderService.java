@@ -6,6 +6,7 @@ import com.softuni.perfumes_shop.model.dto.outbound.ViewOrderDTO;
 import com.softuni.perfumes_shop.model.entity.Order;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface OrderService {
 
@@ -17,7 +18,9 @@ public interface OrderService {
 
     boolean changeStatusById(Long id);
 
-    ViewOrderDTO getOrderById(Long id);
+    ViewOrderDTO getViewOrderDTOByOrderId(Long id);
 
     void deleteOrderById(Long id);
+
+    Optional<Order> getOrderById(Long id);
 }

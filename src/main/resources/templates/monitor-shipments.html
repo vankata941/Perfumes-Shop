@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+
+<head th:replace="~{commons/head::head}"></head>
+
+<body>
+
+<header th:replace="~{commons/header::header}"></header>
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">Shipments</h2>
+
+    <div class="mt-3 text-center" style="font-size: 25px" th:if="${shipments.size() == 0}">There are no current shipments.</div>
+    <table
+            class="table table-bordered mt-3"
+            th:if="${shipments.size() != 0}"
+    >
+        <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Order created</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Phone Number</th>
+            <th>Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="shipment : ${shipments}">
+            <td><a th:href="@{/order/details/{id}(id = *{shipment.orderId})}" th:text="${shipment.orderId}"></a></td>
+            <td th:text="${shipment.orderCreatedDate}"></td>
+            <td th:text="${shipment.firstName}"></td>
+            <td th:text="${shipment.lastName}"></td>
+            <td th:text="${shipment.phoneNumber}"></td>
+            <td th:text="${shipment.status.getName()}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<footer th:replace="~{commons/footer::footer}"></footer>
+</body>
+</html>

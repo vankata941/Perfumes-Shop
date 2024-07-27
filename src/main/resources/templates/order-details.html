@@ -19,6 +19,9 @@
                     <div>
                         <h5 class="card-title">Order Information</h5>
                         <p class="card-text mb-1"><strong>Order ID: </strong><span th:text="${orderData.id}"></span></p>
+                        <p class="card-text mb-1"><strong>Order created: </strong><span
+                                th:text="${orderData.orderCreatedDate}"></span>
+                        </p>
                         <p class="card-text mb-1"><strong>First Name: </strong><span
                                 th:text="${orderData.firstName}"></span></p>
                         <p class="card-text mb-1"><strong>Last Name: </strong><span
@@ -35,8 +38,10 @@
                     <input type="hidden" class="priceInBGN" data-id="price-${orderData.id}"
                            th:value="${orderData.totalAmount}">
                     <div class="d-flex align-items-center">
-                        <form th:action="@{/order/delete/{id}(id = *{orderData.id})}"
-                              th:method="DELETE"
+                        <form
+                                th:if="${orderData.orderStatus == 'CREATED'}"
+                                th:action="@{/order/delete/{id}(id = *{orderData.id})}"
+                                th:method="DELETE"
                         >
                             <button class="btn btn-danger">Remove</button>
                         </form>

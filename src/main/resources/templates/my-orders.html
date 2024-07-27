@@ -21,6 +21,7 @@
                 <div class="card-body order-info">
                     <h5 class="card-title">Order Information</h5>
                     <p class="card-text mb-1"><strong>Order ID: </strong><span th:text="${order.id}"></span></p>
+                    <p class="card-text mb-1"><strong>Order created: </strong><span th:text="${order.orderCreatedDate}"></span></p>
                     <p class="card-text mb-1"><strong>First Name: </strong><span th:text="${order.firstName}"></span></p>
                     <p class="card-text mb-1"><strong>Last Name: </strong><span th:text="${order.lastName}"></span></p>
                     <p class="card-text mb-1"><strong>Amount: </strong><span class="price" data-id="price-${order.id}" th:text="${order.totalAmount}">0.00</span></p>

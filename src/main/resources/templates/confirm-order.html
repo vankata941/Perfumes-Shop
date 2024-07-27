@@ -24,6 +24,7 @@
         <thead>
         <tr>
             <th>Order ID</th>
+            <th>Order Created</th>
             <th>First Name</th>
             <th>Last Name</th>
             <th>Phone Number</th>
@@ -33,6 +34,7 @@
         <tbody>
         <tr th:each="orderToConfirm : ${ordersToConfirm}">
             <td><a th:href="@{/order/details/{id}(id = *{orderToConfirm.id})}" th:text="${orderToConfirm.id}"></a></td>
+            <td th:text="${orderToConfirm.orderCreatedDate}"></td>
             <td th:text="${orderToConfirm.firstName}"></td>
             <td th:text="${orderToConfirm.lastName}"></td>
             <td th:text="${orderToConfirm.phoneNumber}"></td>

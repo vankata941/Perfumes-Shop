@@ -1,28 +1,25 @@
 package com.softuni.perfumes_shop.model.dto.outbound;
 
+import com.softuni.perfumes_shop.model.enums.OrderStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.math.BigDecimal;
-import java.util.List;
-
 @Getter
 @Setter
 @NoArgsConstructor
-public class ViewOrderDTO {
+public class ViewShippingDetailDTO {
 
-    private Long id;
+    private Long orderId;
 
     private String firstName;
 
     private String lastName;
 
-    private String orderStatus;
-
-    private BigDecimal totalAmount;
+    private String phoneNumber;
 
     private String orderCreatedDate;
 
-    private List<ViewOrderDetailDTO> orderDetails;
+    private OrderStatus status;
+
 }

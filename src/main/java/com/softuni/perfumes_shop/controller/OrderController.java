@@ -4,6 +4,7 @@ import com.softuni.perfumes_shop.model.dto.inbound.CreateOrderDTO;
 import com.softuni.perfumes_shop.model.dto.outbound.OrderConfirmationDTO;
 import com.softuni.perfumes_shop.model.dto.outbound.ViewOrderDTO;
 import com.softuni.perfumes_shop.service.OrderService;
+import com.softuni.perfumes_shop.service.ShippingService;
 import com.softuni.perfumes_shop.service.exception.AuthorizationCheckException;
 import com.softuni.perfumes_shop.service.session.CurrentUserDetails;
 import jakarta.validation.Valid;
@@ -23,6 +24,7 @@ public class OrderController {
 
     private final OrderService orderService;
     private final CurrentUserDetails currentUserDetails;
+    private final ShippingService shippingService;
 
     @ModelAttribute("orderData")
     private CreateOrderDTO orderData() {
@@ -86,6 +88,8 @@ public class OrderController {
 
         boolean hasChanged = orderService.changeStatusById(id);
 
+        shippingService.createShipping(id);
+
         if (hasChanged) {
             redirectAttributes.addFlashAttribute("statusChanged", true);
 
@@ -101,7 +105,7 @@ public class OrderController {
             throw new AuthorizationCheckException();
         }
 
-        ViewOrderDTO viewOrderData = orderService.getOrderById(id);
+        ViewOrderDTO viewOrderData = orderService.getViewOrderDTOByOrderId(id);
 
         model.addAttribute("orderData", viewOrderData);
 

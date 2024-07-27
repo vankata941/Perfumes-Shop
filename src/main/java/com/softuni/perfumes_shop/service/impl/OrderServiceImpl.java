@@ -90,6 +90,7 @@ public class OrderServiceImpl implements OrderService {
         viewOrderDTO.setLastName(order.getUserDetail().getLastName());
         viewOrderDTO.setOrderStatus(order.getOrderStatus().getName());
         viewOrderDTO.setTotalAmount(order.getTotalAmount());
+        viewOrderDTO.setOrderCreatedDate(order.getOrderCreatedDate());
 
         List<ViewOrderDetailDTO> viewOrderDetailList = mapOrderDetailDTO(order);
         viewOrderDTO.setOrderDetails(viewOrderDetailList);
@@ -108,6 +109,7 @@ public class OrderServiceImpl implements OrderService {
             orderConfirmationDTO.setFirstName(order.getUserDetail().getFirstName());
             orderConfirmationDTO.setLastName(order.getUserDetail().getLastName());
             orderConfirmationDTO.setPhoneNumber(order.getUserDetail().getPhoneNumber());
+            orderConfirmationDTO.setOrderCreatedDate(order.getOrderCreatedDate());
 
             orderConfirmationsList.add(orderConfirmationDTO);
         }
@@ -130,7 +132,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public ViewOrderDTO getOrderById(Long id) {
+    public ViewOrderDTO getViewOrderDTOByOrderId(Long id) {
         ViewOrderDTO viewOrderDTO = new ViewOrderDTO();
         Optional<Order> optOrder = orderRepository.findById(id);
 
@@ -150,6 +152,11 @@ public class OrderServiceImpl implements OrderService {
                 orderRepository.deleteById(id);
             }
         }
+    }
+
+    @Override
+    public Optional<Order> getOrderById(Long id) {
+        return orderRepository.findById(id);
     }
 
     private List<ViewOrderDetailDTO> mapOrderDetailDTO(Order order) {

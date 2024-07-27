@@ -1,6 +1,7 @@
 package com.softuni.perfumes_shop.service.impl;
 
 import com.softuni.perfumes_shop.model.dto.inbound.CreateOrderDTO;
+import com.softuni.perfumes_shop.model.dto.outbound.OrderConfirmationDTO;
 import com.softuni.perfumes_shop.model.dto.outbound.ViewOrderDTO;
 import com.softuni.perfumes_shop.model.dto.outbound.ViewOrderDetailDTO;
 import com.softuni.perfumes_shop.model.entity.*;
@@ -72,15 +73,7 @@ public class OrderServiceImpl implements OrderService {
             for (UserDetail userDetail : userDetails) {
                 List<Order> allByUserDetailId = orderRepository.findAllByUserDetailId(userDetail.getId());
                 for (Order order : allByUserDetailId) {
-                    ViewOrderDTO viewOrderDTO = new ViewOrderDTO();
-                    viewOrderDTO.setId(order.getId());
-                    viewOrderDTO.setFirstName(order.getUserDetail().getFirstName());
-                    viewOrderDTO.setLastName(order.getUserDetail().getLastName());
-                    viewOrderDTO.setOrderStatus(order.getOrderStatus().getName());
-                    viewOrderDTO.setTotalAmount(order.getTotalAmount());
-
-                    List<ViewOrderDetailDTO> viewOrderDetailList = mapOrderDetailDTO(order);
-                    viewOrderDTO.setOrderDetails(viewOrderDetailList);
+                    ViewOrderDTO viewOrderDTO = getViewOrderDTO(order);
 
                     viewOrders.add(viewOrderDTO);
                 }
@@ -88,6 +81,75 @@ public class OrderServiceImpl implements OrderService {
         }
 
         return viewOrders;
+    }
+
+    private ViewOrderDTO getViewOrderDTO(Order order) {
+        ViewOrderDTO viewOrderDTO = new ViewOrderDTO();
+        viewOrderDTO.setId(order.getId());
+        viewOrderDTO.setFirstName(order.getUserDetail().getFirstName());
+        viewOrderDTO.setLastName(order.getUserDetail().getLastName());
+        viewOrderDTO.setOrderStatus(order.getOrderStatus().getName());
+        viewOrderDTO.setTotalAmount(order.getTotalAmount());
+
+        List<ViewOrderDetailDTO> viewOrderDetailList = mapOrderDetailDTO(order);
+        viewOrderDTO.setOrderDetails(viewOrderDetailList);
+        return viewOrderDTO;
+    }
+
+    @Override
+    public List<OrderConfirmationDTO> getAllOrders() {
+        List<Order> allByOrderStatus = orderRepository.findAllByOrderStatus(OrderStatus.CREATED);
+
+        List<OrderConfirmationDTO> orderConfirmationsList = new ArrayList<>();
+
+        for (Order order : allByOrderStatus) {
+            OrderConfirmationDTO orderConfirmationDTO = new OrderConfirmationDTO();
+            orderConfirmationDTO.setId(order.getId());
+            orderConfirmationDTO.setFirstName(order.getUserDetail().getFirstName());
+            orderConfirmationDTO.setLastName(order.getUserDetail().getLastName());
+            orderConfirmationDTO.setPhoneNumber(order.getUserDetail().getPhoneNumber());
+
+            orderConfirmationsList.add(orderConfirmationDTO);
+        }
+
+        return orderConfirmationsList;
+    }
+
+    @Override
+    public boolean changeStatusById(Long id) {
+        Optional<Order> optOrder = orderRepository.findById(id);
+
+        if (optOrder.isPresent()) {
+            optOrder.get().setOrderStatus(OrderStatus.CONFIRMED);
+
+            orderRepository.save(optOrder.get());
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    @Transactional
+    public ViewOrderDTO getOrderById(Long id) {
+        ViewOrderDTO viewOrderDTO = new ViewOrderDTO();
+        Optional<Order> optOrder = orderRepository.findById(id);
+
+        if (optOrder.isPresent()) {
+            Order order = optOrder.get();
+            viewOrderDTO = getViewOrderDTO(order);
+        }
+
+        return viewOrderDTO;
+    }
+
+    @Override
+    public void deleteOrderById(Long id) {
+        Optional<Order> optOrder = orderRepository.findById(id);
+        if (optOrder.isPresent()) {
+            if (optOrder.get().getOrderStatus() == OrderStatus.CREATED) {
+                orderRepository.deleteById(id);
+            }
+        }
     }
 
     private List<ViewOrderDetailDTO> mapOrderDetailDTO(Order order) {

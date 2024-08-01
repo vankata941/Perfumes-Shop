@@ -1,4 +1,4 @@
-package com.softuni.perfumes_shop.model.dto.outbound;
+package com.softuni.perfumes_shop.model.dto.inbound;
 
 import com.softuni.perfumes_shop.model.enums.OrderStatus;
 import lombok.Getter;

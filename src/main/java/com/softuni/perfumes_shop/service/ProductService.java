@@ -21,4 +21,5 @@ public interface ProductService {
 
     String findNameOfProduct(Long id);
 
+    List<ViewProductDTO> searchProducts(String keyword);
 }

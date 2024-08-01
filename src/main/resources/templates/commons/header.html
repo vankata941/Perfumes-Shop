@@ -170,8 +170,17 @@
                             </li>
                         </ul>
                     </div>
-                    <form class="d-flex" role="search">
-                        <input class="form-control me-2" type="search" th:placeholder="#{nav_bar_search}"
+                    <form
+                            th:action="@{/search}"
+                            th:method="GET"
+                            class="d-flex"
+                            role="search"
+                    >
+                        <input class="form-control me-2"
+                               name="keyword"
+                               type="search"
+                               th:placeholder="#{nav_bar_search}"
+                               th:value="${keyword}"
                                aria-label="Search">
                         <button class="btn btn-outline-light me-2"
                                 type="submit"

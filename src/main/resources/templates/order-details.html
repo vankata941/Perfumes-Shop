@@ -18,29 +18,29 @@
                 <div class="d-flex justify-content-between">
                     <div>
                         <h5 class="card-title">Order Information</h5>
-                        <p class="card-text mb-1"><strong>Order ID: </strong><span th:text="${orderData.id}"></span></p>
+                        <p class="card-text mb-1"><strong>Order ID: </strong><span th:text="${viewOrderData.id}"></span></p>
                         <p class="card-text mb-1"><strong>Order created: </strong><span
-                                th:text="${orderData.orderCreatedDate}"></span>
+                                th:text="${viewOrderData.orderCreatedDate}"></span>
                         </p>
                         <p class="card-text mb-1"><strong>First Name: </strong><span
-                                th:text="${orderData.firstName}"></span></p>
+                                th:text="${viewOrderData.firstName}"></span></p>
                         <p class="card-text mb-1"><strong>Last Name: </strong><span
-                                th:text="${orderData.lastName}"></span>
+                                th:text="${viewOrderData.lastName}"></span>
                         </p>
                         <p class="card-text mb-1"><strong>Amount: </strong><span class="price"
                                                                                  data-id="price-${orderData.id}"
-                                                                                 th:text="${orderData.totalAmount}">0.00</span>
+                                                                                 th:text="${viewOrderData.totalAmount}">0.00</span>
                         </p>
                         <p class="card-text mb-1"><strong>Status: </strong><span
-                                th:text="${orderData.orderStatus}"></span>
+                                th:text="${viewOrderData.orderStatus}"></span>
                         </p>
                     </div>
                     <input type="hidden" class="priceInBGN" data-id="price-${orderData.id}"
-                           th:value="${orderData.totalAmount}">
+                           th:value="${viewOrderData.totalAmount}">
                     <div class="d-flex align-items-center">
                         <form
-                                th:if="${orderData.orderStatus == 'CREATED'}"
-                                th:action="@{/order/delete/{id}(id = *{orderData.id})}"
+                                th:if="${viewOrderData.orderStatus == 'Created'}"
+                                th:action="@{/order/delete/{id}(id = *{viewOrderData.id})}"
                                 th:method="DELETE"
                         >
                             <button class="btn btn-danger">Remove</button>
@@ -64,7 +64,7 @@
             </thead>
             <tbody>
             <tr
-                    th:each="orderDetail : ${orderData.orderDetails}"
+                    th:each="orderDetail : ${viewOrderData.orderDetails}"
             >
                 <td>
                     <img th:src="'data:image/jpeg;base64,' + ${orderDetail.image}"

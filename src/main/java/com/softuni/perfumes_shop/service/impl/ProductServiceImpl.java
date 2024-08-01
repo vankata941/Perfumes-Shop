@@ -107,4 +107,12 @@ public class ProductServiceImpl implements ProductService {
         Optional<Product> optProduct = productRepository.findById(id);
         return optProduct.map(Product::getName).orElse(null);
     }
+
+    @Override
+    public List<ViewProductDTO> searchProducts(String keyword) {
+        List<Product> productsByKeyword = productRepository
+                .findByNameContainingIgnoreCaseOrBrandContainingIgnoreCase(keyword, keyword);
+
+        return productsByKeyword.stream().map(this::mapProduct).toList();
+    }
 }

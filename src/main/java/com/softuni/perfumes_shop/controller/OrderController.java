@@ -107,7 +107,7 @@ public class OrderController {
 
         ViewOrderDTO viewOrderData = orderService.getViewOrderDTOByOrderId(id);
 
-        model.addAttribute("orderData", viewOrderData);
+        model.addAttribute("viewOrderData", viewOrderData);
 
         return "order-details";
     }

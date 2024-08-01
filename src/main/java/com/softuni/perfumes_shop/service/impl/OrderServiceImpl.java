@@ -133,12 +133,14 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public ViewOrderDTO getViewOrderDTOByOrderId(Long id) {
-        ViewOrderDTO viewOrderDTO = new ViewOrderDTO();
+        ViewOrderDTO viewOrderDTO;
         Optional<Order> optOrder = orderRepository.findById(id);
 
         if (optOrder.isPresent()) {
             Order order = optOrder.get();
             viewOrderDTO = getViewOrderDTO(order);
+        } else {
+            viewOrderDTO = new ViewOrderDTO();
         }
 
         return viewOrderDTO;

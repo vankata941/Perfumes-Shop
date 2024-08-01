@@ -1,5 +1,6 @@
 package com.softuni.perfumes_shop.controller;
 
+import com.softuni.perfumes_shop.controller.aop.WarnExecutionExceeds;
 import com.softuni.perfumes_shop.model.dto.outbound.ConversionResultDTO;
 import com.softuni.perfumes_shop.service.ExchangeRateService;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ public class CurrencyController {
 
     private final ExchangeRateService exchangeRateService;
 
+    @WarnExecutionExceeds(threshold = 1000)
     @GetMapping("/currency/convert")
     public ResponseEntity<ConversionResultDTO> convertCurrency(
             @RequestParam("from") String from,

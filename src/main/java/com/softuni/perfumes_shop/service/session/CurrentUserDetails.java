@@ -4,10 +4,12 @@ import com.softuni.perfumes_shop.model.entity.User;
 import com.softuni.perfumes_shop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.Optional;
 
 @Service
@@ -42,4 +44,7 @@ public class CurrentUserDetails {
         return !hasRole("ANONYMOUS");
     }
 
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getAuthentication().getAuthorities();
+    }
 }

@@ -9,6 +9,7 @@ import com.softuni.perfumes_shop.service.OrderService;
 import com.softuni.perfumes_shop.service.ShippingService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -18,21 +19,27 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class ShippingServiceImpl implements ShippingService {
 
     private final RestClient restClient;
-    private final ShippingApiConfig shippingApiConfig;
     private final OrderService orderService;
     private final ModelMapper modelMapper;
+
+    public ShippingServiceImpl(@Qualifier(value = "shippingRestClient") RestClient restClient,
+                               OrderService orderService,
+                               ModelMapper modelMapper)
+    {
+        this.restClient = restClient;
+        this.orderService = orderService;
+        this.modelMapper = modelMapper;
+    }
 
 
     private void createShippingDetail(ShippingDetailDTO shippingDetailDTO) {
 
         restClient
                 .post()
-                .uri("http://localhost:8081/shipping/create")
-                .header("Content-Type", MediaType.APPLICATION_JSON_VALUE)
+                .uri("/shipping/create")
                 .body(shippingDetailDTO)
                 .retrieve();
     }
@@ -63,7 +70,7 @@ public class ShippingServiceImpl implements ShippingService {
 
         return restClient
                 .get()
-                .uri("http://localhost:8081/shipping/all")
+                .uri("/shipping/all")
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .body(new ParameterizedTypeReference<>(){});

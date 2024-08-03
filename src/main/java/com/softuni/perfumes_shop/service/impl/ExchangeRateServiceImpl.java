@@ -6,9 +6,9 @@ import com.softuni.perfumes_shop.model.entity.ExchangeRate;
 import com.softuni.perfumes_shop.repository.ExchangeRateRepository;
 import com.softuni.perfumes_shop.service.ExchangeRateService;
 import com.softuni.perfumes_shop.service.exception.ApiObjectNotFoundException;
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
@@ -18,13 +18,21 @@ import java.math.RoundingMode;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class ExchangeRateServiceImpl implements ExchangeRateService {
 
     private final Logger LOGGER = LoggerFactory.getLogger(ExchangeRateServiceImpl.class);
     private final ExchangeRateRepository exchangeRateRepository;
     private final RestClient restClient;
     private final ForexConfig forexConfig;
+
+    public ExchangeRateServiceImpl(ExchangeRateRepository exchangeRateRepository,
+                                   @Qualifier(value = "genericRestClient") RestClient restClient,
+                                   ForexConfig forexConfig)
+    {
+        this.exchangeRateRepository = exchangeRateRepository;
+        this.restClient = restClient;
+        this.forexConfig = forexConfig;
+    }
 
     @Override
     public boolean hasInitializedExRates() {

@@ -2,13 +2,13 @@ package com.softuni.perfumes_shop.controller;
 
 import com.softuni.perfumes_shop.model.dto.inbound.AddProductDTO;
 import com.softuni.perfumes_shop.model.dto.outbound.ViewProductDTO;
+import com.softuni.perfumes_shop.model.enums.Gender;
 import com.softuni.perfumes_shop.model.enums.ProductType;
 import com.softuni.perfumes_shop.service.CartService;
 import com.softuni.perfumes_shop.service.ProductService;
 import com.softuni.perfumes_shop.service.exception.AuthorizationCheckException;
 import com.softuni.perfumes_shop.service.session.CurrentUserDetails;
 import jakarta.persistence.NonUniqueResultException;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -44,6 +44,11 @@ public class ProductController {
                 Arrays.stream(ProductType.values())
                         .map(ProductType::getName)
                         .toArray());
+
+        model.addAttribute("genderTypes",
+                Arrays.stream(Gender.values())
+                .map(Gender::getGender)
+                .toArray());
 
         return "add-product";
     }
@@ -82,12 +87,32 @@ public class ProductController {
     public String viewAllProducts(Model model) {
         List<ViewProductDTO> allProducts = productService.getAllProducts();
         model.addAttribute("products", allProducts);
-        return "all-products";
+
+        return "products";
     }
 
-    @GetMapping("/eau-de-toilette")
-    public String viewEauDeToilette() {
-        return "eau-de-toilette";
+    @GetMapping("/male-fragrances")
+    public String viewMaleFragrances(Model model) {
+        List<ViewProductDTO> maleFragrances = productService.getMaleProducts();
+        model.addAttribute("products", maleFragrances);
+
+        return "products";
+    }
+
+    @GetMapping("/female-fragrances")
+    public String viewFemaleFragrances(Model model) {
+        List<ViewProductDTO> femaleFragrances = productService.getFemaleProducts();
+        model.addAttribute("products", femaleFragrances);
+
+        return "products";
+    }
+
+    @GetMapping("/unisex-fragrances")
+    public String viewUnisexFragrances(Model model) {
+        List<ViewProductDTO> unisexFragrances = productService.getUnisexProducts();
+        model.addAttribute("products", unisexFragrances);
+
+        return "products";
     }
 
     @GetMapping("/product/{id}")

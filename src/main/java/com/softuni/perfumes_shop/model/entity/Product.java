@@ -1,5 +1,6 @@
 package com.softuni.perfumes_shop.model.entity;
 
+import com.softuni.perfumes_shop.model.enums.Gender;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,10 @@ public class Product extends BaseEntity {
 
     @Column(nullable = false)
     private String description;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
     @Column(nullable = false)
     private BigDecimal price;

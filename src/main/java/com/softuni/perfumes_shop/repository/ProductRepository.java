@@ -1,6 +1,7 @@
 package com.softuni.perfumes_shop.repository;
 
 import com.softuni.perfumes_shop.model.entity.Product;
+import com.softuni.perfumes_shop.model.enums.Gender;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -16,4 +17,5 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     List<Product> findByNameContainingIgnoreCaseOrBrandContainingIgnoreCase(String name, String brand);
 
+    List<Product> findAllByGender(Gender gender);
 }

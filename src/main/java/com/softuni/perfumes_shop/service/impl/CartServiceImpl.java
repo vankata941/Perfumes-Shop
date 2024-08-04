@@ -205,6 +205,7 @@ public class CartServiceImpl implements CartService {
         }
         viewCartItemDTO.setId(cartItem.getId());
         viewCartItemDTO.setQuantity(cartItem.getQuantity());
+        viewCartItemDTO.setGender(cartItem.getProduct().getGender().getGender());
 
         return viewCartItemDTO;
     }

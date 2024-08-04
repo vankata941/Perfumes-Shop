@@ -22,4 +22,10 @@ public interface ProductService {
     String findNameOfProduct(Long id);
 
     List<ViewProductDTO> searchProducts(String keyword);
+
+    List<ViewProductDTO> getMaleProducts();
+
+    List<ViewProductDTO> getFemaleProducts();
+
+    List<ViewProductDTO> getUnisexProducts();
 }

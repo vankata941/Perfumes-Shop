@@ -5,6 +5,7 @@ import com.softuni.perfumes_shop.model.dto.outbound.ViewProductDTO;
 import com.softuni.perfumes_shop.model.entity.Image;
 import com.softuni.perfumes_shop.model.entity.Product;
 import com.softuni.perfumes_shop.model.entity.Type;
+import com.softuni.perfumes_shop.model.enums.Gender;
 import com.softuni.perfumes_shop.repository.ProductRepository;
 import com.softuni.perfumes_shop.service.ImageService;
 import com.softuni.perfumes_shop.service.ProductService;
@@ -16,6 +17,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
@@ -34,17 +36,23 @@ public class ProductServiceImpl implements ProductService {
     public void addProduct(AddProductDTO productData) {
 
         if (productRepository.existsByName(productData.getName())) {
-            throw new NonUniqueResultException("Product with this name already exists");
+            throw new NonUniqueResultException("Product with this name already exists!");
         }
 
         Product product = modelMapper.map(productData, Product.class);
+
+        boolean genderExists = Arrays.stream(Gender.values()).anyMatch(g -> g.getGender().equals(productData.getGender()));
+        if (!genderExists) {
+            throw new IllegalArgumentException("Invalid gender!");
+        }
+        product.setGender(Gender.valueOf(productData.getGender().toUpperCase()));
 
         Optional<Type> optType = typeService.findByProductTypeName(productData.getProductTypeName());
 
         if (optType.isPresent()) {
             product.setType(optType.get());
         } else {
-            throw new IllegalArgumentException("Invalid product type");
+            throw new IllegalArgumentException("Invalid product type!");
         }
 
 
@@ -55,7 +63,7 @@ public class ProductServiceImpl implements ProductService {
             product.setImage(optImage.get());
         } else {
             imageService.deleteImage(productData.getImage().getOriginalFilename());
-            throw new IllegalArgumentException("Invalid image");
+            throw new IllegalArgumentException("Invalid image!");
         }
 
 
@@ -77,6 +85,9 @@ public class ProductServiceImpl implements ProductService {
         }
         if (product.getType() != null) {
             viewProductDTO.setProductTypeName(product.getType().getProductType().getName());
+        }
+        if (product.getGender() != null) {
+            viewProductDTO.setGender(product.getGender().getGender());
         }
         return viewProductDTO;
     }
@@ -114,5 +125,23 @@ public class ProductServiceImpl implements ProductService {
                 .findByNameContainingIgnoreCaseOrBrandContainingIgnoreCase(keyword, keyword);
 
         return productsByKeyword.stream().map(this::mapProduct).toList();
+    }
+
+    @Override
+    public List<ViewProductDTO> getMaleProducts() {
+        List<Product> maleProducts = productRepository.findAllByGender(Gender.MALE);
+        return maleProducts.stream().map(this::mapProduct).toList();
+    }
+
+    @Override
+    public List<ViewProductDTO> getFemaleProducts() {
+        List<Product> maleProducts = productRepository.findAllByGender(Gender.FEMALE);
+        return maleProducts.stream().map(this::mapProduct).toList();
+    }
+
+    @Override
+    public List<ViewProductDTO> getUnisexProducts() {
+        List<Product> maleProducts = productRepository.findAllByGender(Gender.UNISEX);
+        return maleProducts.stream().map(this::mapProduct).toList();
     }
 }

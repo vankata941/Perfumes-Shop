@@ -17,15 +17,15 @@ public class ShippingController {
     private final CurrentUserDetails currentUserDetails;
 
 
-    @GetMapping("/shipments")
+    @GetMapping("/shipping")
     public String viewOrderShipments(Model model) {
 
         if (!currentUserDetails.hasRole("ADMIN")) {
             throw new AuthorizationCheckException();
         }
 
-        model.addAttribute("shipments", shippingService.getAllShipments());
+        model.addAttribute("shipping", shippingService.getAllShipments());
 
-        return "monitor-shipments";
+        return "monitor-shipping";
     }
 }

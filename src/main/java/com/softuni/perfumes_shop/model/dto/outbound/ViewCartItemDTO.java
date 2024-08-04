@@ -17,6 +17,8 @@ public class ViewCartItemDTO {
 
     private String name;
 
+    private String gender;
+
     private BigDecimal price;
 
     private int quantity;

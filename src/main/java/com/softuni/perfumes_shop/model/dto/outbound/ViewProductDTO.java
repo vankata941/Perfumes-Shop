@@ -15,6 +15,7 @@ public class ViewProductDTO {
     private String brand;
     private String name;
     private String description;
+    private String gender;
     private BigDecimal price;
     private boolean isInStock;
     private String packaging;

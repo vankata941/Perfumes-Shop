@@ -1,13 +1,11 @@
 package com.softuni.perfumes_shop.service.impl;
 
-import com.softuni.perfumes_shop.config.ShippingApiConfig;
 import com.softuni.perfumes_shop.model.dto.inbound.ViewShippingDetailDTO;
 import com.softuni.perfumes_shop.model.dto.outbound.ShippingAddressDTO;
 import com.softuni.perfumes_shop.model.dto.outbound.ShippingDetailDTO;
 import com.softuni.perfumes_shop.model.entity.Order;
 import com.softuni.perfumes_shop.service.OrderService;
 import com.softuni.perfumes_shop.service.ShippingService;
-import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.ParameterizedTypeReference;

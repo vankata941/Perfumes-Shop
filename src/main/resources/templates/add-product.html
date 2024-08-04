@@ -71,6 +71,22 @@
                 <label for="floatingDescription">Description</label>
             </div>
             <div class="form-floating mb-3">
+                <select
+                        th:field="*{gender}"
+                        th:errorclass="is-invalid"
+                        name="productGender"
+                        class="form-select"
+                        id="floatingGender"
+                        required
+                >
+                    <option value="">Select gender</option>
+                    <option th:each="genderType : ${genderTypes}" th:value="${genderType}" th:text="${genderType}"></option>
+                </select>
+
+                <small class="invalid-feedback danger">You must select a gender!</small>
+                <label for="floatingGender" class="visually-hidden">Gender</label>
+            </div>
+            <div class="form-floating mb-3">
                 <input
                         th:errorclass="is-invalid"
                         name="price"

@@ -1,7 +1,6 @@
 package com.softuni.perfumes_shop.config;
 
 import com.softuni.perfumes_shop.service.JwtService;
-import com.softuni.perfumes_shop.service.UserService;
 import com.softuni.perfumes_shop.service.session.CurrentUserDetails;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

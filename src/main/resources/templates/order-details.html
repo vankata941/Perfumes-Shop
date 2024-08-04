@@ -58,6 +58,7 @@
                 <th>Picture</th>
                 <th>Brand</th>
                 <th>Name</th>
+                <th>Gender</th>
                 <th>Packaging</th>
                 <th>Quantity</th>
             </tr>
@@ -75,7 +76,8 @@
                 </td>
                 <td th:text="${orderDetail.brand}"></td>
                 <td th:text="${orderDetail.name}"></td>
-                <td th:text="${orderDetail.packaging}"></td>
+                <td th:text="${orderDetail.gender}"></td>
+                <td><span th:text="${orderDetail.packaging}"></span> ml.</td>
                 <td th:text="${orderDetail.quantity}"></td>
             </tr>
             </tbody>

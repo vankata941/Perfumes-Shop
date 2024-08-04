@@ -17,5 +17,7 @@ public class ViewOrderDetailDTO {
 
     private String packaging;
 
+    private String gender;
+
     private String image;
 }

@@ -26,6 +26,9 @@ public class AddProductDTO {
     private String description;
 
     @NotNull
+    private String gender;
+
+    @NotNull
     @Positive
     @DecimalMin(value = "0.01")
     private BigDecimal price;

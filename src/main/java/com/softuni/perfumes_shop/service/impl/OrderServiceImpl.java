@@ -171,6 +171,7 @@ public class OrderServiceImpl implements OrderService {
             viewOrderDetailDTO.setName(orderDetail.getProduct().getName());
             viewOrderDetailDTO.setQuantity(orderDetail.getQuantity());
             viewOrderDetailDTO.setPackaging(orderDetail.getProduct().getPackaging());
+            viewOrderDetailDTO.setGender(orderDetail.getProduct().getGender().getGender());
             if (orderDetail.getProduct().getImage() != null) {
                 viewOrderDetailDTO.setImage(Base64.getEncoder().encodeToString(orderDetail.getProduct().getImage().getImage()));
             }

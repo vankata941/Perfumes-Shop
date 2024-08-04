@@ -24,6 +24,7 @@
             <div class="col-md-6">
                 <h2 th:text="${product.brand}">Product Brand</h2>
                 <h1 th:text="${product.name}">Product Name</h1>
+                <p th:text="${product.gender}">Gender</p>
                 <p class="text-muted"><span th:text="${product.packaging}">Product Packaging</span> <span th:text="#{product_packaging}">ml.</span></p>
                 <p class="text-muted" th:text="${product.productTypeName}">Product Type</p>
                 <h3><span class="price" data-id="price-${product.id}" th:text="${product.price}">0.00</span></h3>

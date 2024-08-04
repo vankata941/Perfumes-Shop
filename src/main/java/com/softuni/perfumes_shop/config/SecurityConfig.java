@@ -35,6 +35,7 @@ public class SecurityConfig {
                                             "/user/register",
                                             "/about",
                                             "/contacts",
+                                            "/terms",
                                             "/products/male-fragrances",
                                             "/products/female-fragrances",
                                             "/products/unisex-fragrances",

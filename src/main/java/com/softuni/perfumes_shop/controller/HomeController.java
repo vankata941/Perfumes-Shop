@@ -37,6 +37,11 @@ public class HomeController {
         return "contacts";
     }
 
+    @GetMapping("/terms")
+    public String terms() {
+        return "terms";
+    }
+
     @GetMapping("/card/add")
     public String viewAddCard() {
         return "add-card";

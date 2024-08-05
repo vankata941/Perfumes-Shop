@@ -1,9 +1,13 @@
 package com.softuni.perfumes_shop.service.impl;
 
+import com.softuni.perfumes_shop.config.ShippingApiConfig;
+import com.softuni.perfumes_shop.model.dto.inbound.StatusDTO;
 import com.softuni.perfumes_shop.model.dto.inbound.ViewShippingDetailDTO;
 import com.softuni.perfumes_shop.model.dto.outbound.ShippingAddressDTO;
 import com.softuni.perfumes_shop.model.dto.outbound.ShippingDetailDTO;
 import com.softuni.perfumes_shop.model.entity.Order;
+import com.softuni.perfumes_shop.model.enums.OrderStatus;
+import com.softuni.perfumes_shop.repository.OrderRepository;
 import com.softuni.perfumes_shop.service.OrderService;
 import com.softuni.perfumes_shop.service.ShippingService;
 import org.modelmapper.ModelMapper;
@@ -20,16 +24,21 @@ import java.util.Optional;
 public class ShippingServiceImpl implements ShippingService {
 
     private final RestClient restClient;
+    private final RestClient genericRestClient;
     private final OrderService orderService;
     private final ModelMapper modelMapper;
+    private final ShippingApiConfig shippingApiConfig;
 
     public ShippingServiceImpl(@Qualifier(value = "shippingRestClient") RestClient restClient,
                                OrderService orderService,
-                               ModelMapper modelMapper)
+                               ModelMapper modelMapper, OrderRepository orderRepository,
+                               @Qualifier(value = "genericRestClient") RestClient genericRestClient, ShippingApiConfig shippingApiConfig)
     {
         this.restClient = restClient;
         this.orderService = orderService;
         this.modelMapper = modelMapper;
+        this.genericRestClient = genericRestClient;
+        this.shippingApiConfig = shippingApiConfig;
     }
 
 
@@ -64,8 +73,8 @@ public class ShippingServiceImpl implements ShippingService {
     }
 
     @Override
-    public List<ViewShippingDetailDTO> getAllShipments() {
-
+    public List<ViewShippingDetailDTO> getAllShipping() {
+        updateStatuses();
         return restClient
                 .get()
                 .uri("/shipping/all")
@@ -74,5 +83,38 @@ public class ShippingServiceImpl implements ShippingService {
                 .body(new ParameterizedTypeReference<>(){});
     }
 
+    @Override
+    public void deleteShippingByOrderId(Long id) {
+        Optional<Order> optOrder = orderService.getOrderById(id);
+        if (optOrder.isPresent() && optOrder.get().getOrderStatus() == OrderStatus.DELIVERED) {
+            restClient
+                    .delete()
+                    .uri("/shipping/delete/{id}", id)
+                    .retrieve();
+        }
+    }
 
+    private List<StatusDTO> getAllStatuses() {
+
+        return genericRestClient
+                .get()
+                .uri(shippingApiConfig.getBaseUrl() + "/shipping/status")
+                .header("SHIPPING_KEY", shippingApiConfig.getKey())
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .body(new ParameterizedTypeReference<>(){});
+    }
+
+    @Override
+    public void updateStatuses() {
+        List<StatusDTO> allStatuses = getAllStatuses();
+        allStatuses.forEach(orderStatus -> {
+            Optional<Order> optOrder = orderService.getOrderById(orderStatus.getOrderId());
+            if (optOrder.isPresent()) {
+                Order order = optOrder.get();
+                order.setOrderStatus(orderStatus.getStatus());
+                orderService.saveOrder(order);
+            }
+        });
+    }
 }

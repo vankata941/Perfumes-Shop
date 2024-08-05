@@ -46,9 +46,6 @@ public class UserServiceImplIT {
     private CurrentUserDetails currentUserDetails;
 
     @Autowired
-    private ModelMapper modelMapper;
-
-    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @MockBean

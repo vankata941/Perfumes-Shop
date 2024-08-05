@@ -65,15 +65,15 @@ public class HomeController {
             return "redirect:/card/add";
         }
 
-            try {
-                imageService.uploadImage(cardData.getImage());
-            } catch (NonUniqueResultException | IllegalArgumentException e) {
-                redirectAttributes.addFlashAttribute("cardData", cardData);
-                redirectAttributes.addFlashAttribute("hasError", true);
-                redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+        try {
+            imageService.uploadImage(cardData.getImage());
+        } catch (NonUniqueResultException | IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("cardData", cardData);
+            redirectAttributes.addFlashAttribute("hasError", true);
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
 
-                return "redirect:/card/add";
-            }
+            return "redirect:/card/add";
+        }
 
 
         return "index";

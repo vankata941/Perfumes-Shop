@@ -41,6 +41,7 @@ forex:
 
 shipping:
   api:
+    key: ${SHIPPING_KEY:567}
     baseUrl: "http://localhost:8081"
 
 jwt:

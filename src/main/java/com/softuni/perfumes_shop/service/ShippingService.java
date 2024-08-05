@@ -8,5 +8,9 @@ public interface ShippingService {
 
     void createShipping(Long id);
 
-    List<ViewShippingDetailDTO> getAllShipments();
+    List<ViewShippingDetailDTO> getAllShipping();
+
+    void deleteShippingByOrderId(Long id);
+
+    void updateStatuses();
 }

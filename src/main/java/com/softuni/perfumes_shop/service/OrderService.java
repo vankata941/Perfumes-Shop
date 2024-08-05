@@ -23,4 +23,6 @@ public interface OrderService {
     void deleteOrderById(Long id);
 
     Optional<Order> getOrderById(Long id);
+
+    void saveOrder(Order order);
 }

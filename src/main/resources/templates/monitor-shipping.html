@@ -26,6 +26,7 @@
             <th>Last Name</th>
             <th>Phone Number</th>
             <th>Status</th>
+            <th>Complete order</th>
         </tr>
         </thead>
         <tbody>
@@ -36,6 +37,15 @@
             <td th:text="${shipment.lastName}"></td>
             <td th:text="${shipment.phoneNumber}"></td>
             <td th:text="${shipment.status.getName()}"></td>
+            <td>
+                <form
+                    th:if="${shipment.status.getName() == 'Delivered'}"
+                    th:action="@{/shipping/delete/{id}(id = *{shipment.orderId})}"
+                    th:method="DELETE"
+                >
+                    <button class="btn btn-danger">Complete</button>
+                </form>
+            </td>
         </tr>
         </tbody>
     </table>

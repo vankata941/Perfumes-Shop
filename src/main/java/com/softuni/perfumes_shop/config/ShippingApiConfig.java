@@ -11,6 +11,8 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "shipping.api")
 public class ShippingApiConfig {
 
+    private String key;
+
     private String baseUrl;
 
 

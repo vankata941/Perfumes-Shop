@@ -161,6 +161,11 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findById(id);
     }
 
+    @Override
+    public void saveOrder(Order order) {
+        orderRepository.save(order);
+    }
+
     private List<ViewOrderDetailDTO> mapOrderDetailDTO(Order order) {
         List<ViewOrderDetailDTO> viewOrderDetailList = new ArrayList<>();
 

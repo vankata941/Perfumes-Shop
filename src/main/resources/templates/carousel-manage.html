@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head th:replace="~{commons/head::head}"></head>
+
+<body>
+
+<header th:replace="~{commons/header::header}"></header>
+<div class="d-flex justify-content-center align-items-center">
+    <div class="col-md-4 text-center">
+    <div class="image-list">
+        <h5 class="my-5">Uploaded Images:</h5>
+        <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center"
+                th:each="carousel : ${carousels}">
+                <div class="d-flex align-items-center">
+                    <img th:src="'data:image/jpeg;base64,' + ${carousel.image}"
+                         th:alt="${carousel.name}" width="50"
+                         height="50" class="me-2">
+                    <span class="image-name" th:text="${carousel.name}"></span>
+                </div>
+                <form
+                        th:action="@{/carousel/remove/{name}(name = *{carousel.name})}"
+                        th:method="DELETE"
+                >
+                    <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</div>
+</div>
+<footer th:replace="~{commons/footer::footer}"></footer>
+</body>
+</html>

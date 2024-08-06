@@ -6,6 +6,7 @@ import com.softuni.perfumes_shop.model.entity.Image;
 import com.softuni.perfumes_shop.model.entity.Product;
 import com.softuni.perfumes_shop.model.entity.Type;
 import com.softuni.perfumes_shop.model.enums.Gender;
+import com.softuni.perfumes_shop.model.enums.ImageType;
 import com.softuni.perfumes_shop.repository.ProductRepository;
 import com.softuni.perfumes_shop.service.ImageService;
 import com.softuni.perfumes_shop.service.ProductService;
@@ -56,7 +57,7 @@ public class ProductServiceImpl implements ProductService {
         }
 
 
-        imageService.uploadImage(productData.getImage());
+        imageService.uploadImage(productData.getImage(), ImageType.PRODUCT_IMAGE);
 
         Optional<Image> optImage = imageService.findByName(productData.getImage().getOriginalFilename());
         if (optImage.isPresent()) {

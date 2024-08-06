@@ -10,6 +10,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "cart_items")
 public class CartItem extends BaseEntity {
@@ -23,7 +24,4 @@ public class CartItem extends BaseEntity {
     @Column(nullable = false)
     private int quantity;
 
-    public CartItem() {
-        this.quantity = 1;
-    }
 }

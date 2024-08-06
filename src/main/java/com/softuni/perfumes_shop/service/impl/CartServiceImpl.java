@@ -21,6 +21,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class CartServiceImpl implements CartService {
 
+    private static final int DEFAULT_QUANTITY = 1;
     private final CartRepository cartRepository;
     private final ProductService productService;
     private final CurrentUserDetails currentUserDetails;
@@ -47,6 +48,7 @@ public class CartServiceImpl implements CartService {
 
             CartItem cartItem = new CartItem();
             cartItem.setProduct(productService.getProductById(id));
+            cartItem.setQuantity(DEFAULT_QUANTITY);
             cartItem.setCart(cart);
 
             cart.addCartItem(cartItem);

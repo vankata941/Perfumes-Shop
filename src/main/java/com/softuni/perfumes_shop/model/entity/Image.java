@@ -1,8 +1,7 @@
 package com.softuni.perfumes_shop.model.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import com.softuni.perfumes_shop.model.enums.ImageType;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,4 +18,8 @@ public class Image extends BaseEntity {
 
     @Column(nullable = false, columnDefinition = "BLOB")
     private byte[] image;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private ImageType imageType;
 }

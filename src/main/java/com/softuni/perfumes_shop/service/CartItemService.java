@@ -5,5 +5,4 @@ public interface CartItemService {
 
     void removeById(Long id);
 
-    void deleteById(Long cartItemId);
 }

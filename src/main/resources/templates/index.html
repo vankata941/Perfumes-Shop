@@ -4,64 +4,62 @@
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
 >
-  <head th:replace="~{commons/head::head}"></head>
+<head th:replace="~{commons/head::head}"></head>
 
-  <body>
-    
+<body>
+
 <header th:replace="~{commons/header::header}"></header>
 
 <main>
 
-  <div id="myCarousel" class="carousel slide mb-6" data-bs-ride="carousel">
-    <div class="carousel-indicators">
-      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-    </div>
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="var(--bs-secondary-color)"/></svg>
-        <div class="container">
-          <div class="carousel-caption text-start">
-            <h1>Example headline.</h1>
-            <p class="opacity-75">Some representative placeholder content for the first slide of the carousel.</p>
-            <p><a class="btn btn-lg btn-primary" href="#">Sign up today</a></p>
+    <div id="myCarousel" class="carousel slide mb-6" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <th:block th:each="carouselImage, iterStat : ${carouselImages}">
+          <div class="carousel-item" th:classappend="${iterStat.index == 0 ? ' active' : ''}">
+            <img th:src="'data:image/jpeg;base64,' + ${carouselImage.image}"
+                 th:alt="${carouselImage.name}"
+                 style="width: 100%; height: auto;">
           </div>
+        </th:block>
         </div>
-      </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div>
 
-  <div class="container marketing">
-    <div class="row">
-      <div class="col-lg-4">
-        <img class="bd-placeholder-img rounded-circle" width="140" height="140" th:src="@{/images/eau_de_toilette.png}" alt="Eau de Toilette">
-        <h2 class="fw-normal">Eau de Toilette</h2>
-        <p th:text="#{eau_de_toilette}">Eau de Toilette: A light, refreshing fragrance with a lower concentration of perfume oils, perfect for everyday use. Subtle yet captivating aroma.</p>
-      </div>
-      <div class="col-lg-4">
-        <img class="bd-placeholder-img rounded-circle" width="140" height="140" th:src="@{/images/eau_de_perfume.png}" alt="Eau de Perfume">
-        <h2 class="fw-normal">Eau de Perfume</h2>
-        <p th:text="#{eau_de_perfume}">Eau de Perfume: A long-lasting, rich fragrance with a higher concentration of perfume oils. Ideal for special occasions and making a lasting impression.</p>
-      </div>
-      <div class="col-lg-4">
-        <img class="bd-placeholder-img rounded-circle" width="140" height="140" th:src="@{/images/perfume.png}" alt="Perfume">
-        <h2 class="fw-normal">Perfume</h2>
-        <p th:text="#{perfume}">Perfume: The most concentrated and long-lasting fragrance, offering an intense and luxurious aroma that lasts all day. Perfect for special occasions.</p>
-      </div>
+    <div class="container marketing">
+        <div class="row">
+            <div class="col-lg-4">
+                <img class="bd-placeholder-img rounded-circle" width="140" height="140"
+                     th:src="@{/images/eau_de_toilette.png}" alt="Eau de Toilette">
+                <h2 class="fw-normal">Eau de Toilette</h2>
+                <p th:text="#{eau_de_toilette}">Eau de Toilette: A light, refreshing fragrance with a lower
+                    concentration of perfume oils, perfect for everyday use. Subtle yet captivating aroma.</p>
+            </div>
+            <div class="col-lg-4">
+                <img class="bd-placeholder-img rounded-circle" width="140" height="140"
+                     th:src="@{/images/eau_de_perfume.png}" alt="Eau de Perfume">
+                <h2 class="fw-normal">Eau de Perfume</h2>
+                <p th:text="#{eau_de_perfume}">Eau de Perfume: A long-lasting, rich fragrance with a higher
+                    concentration of perfume oils. Ideal for special occasions and making a lasting impression.</p>
+            </div>
+            <div class="col-lg-4">
+                <img class="bd-placeholder-img rounded-circle" width="140" height="140" th:src="@{/images/perfume.png}"
+                     alt="Perfume">
+                <h2 class="fw-normal">Perfume</h2>
+                <p th:text="#{perfume}">Perfume: The most concentrated and long-lasting fragrance, offering an intense
+                    and luxurious aroma that lasts all day. Perfect for special occasions.</p>
+            </div>
+        </div>
     </div>
-  </div>
 </main>
 
-  <footer th:replace="~{commons/footer::footer}"></footer>
+<footer th:replace="~{commons/footer::footer}"></footer>
 
-    </body>
+</body>
 </html>

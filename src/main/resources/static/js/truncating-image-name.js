@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const maxLength = 20;
 
-    document.querySelectorAll('.image-name').forEach(el => {
+    document.querySelectorAll('.long-name').forEach(el => {
         truncateText(el, maxLength);
     });
 });

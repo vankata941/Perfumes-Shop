@@ -23,6 +23,7 @@ public class CreateOrderDTO {
     private String shippingAddress;
 
     @NotBlank
+    @Size(min = 10, max = 12)
     private String phoneNumber;
 
     @NotBlank

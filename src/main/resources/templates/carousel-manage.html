@@ -20,7 +20,7 @@
                     <img th:src="'data:image/jpeg;base64,' + ${carousel.image}"
                          th:alt="${carousel.name}" width="50"
                          height="50" class="me-2">
-                    <span class="image-name" th:text="${carousel.name}"></span>
+                    <span class="long-name" th:text="${carousel.name}"></span>
                 </div>
                 <form
                         th:action="@{/carousel/remove/{name}(name = *{carousel.name})}"

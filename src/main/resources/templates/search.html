@@ -22,6 +22,7 @@
                              th:alt="${product.name}"
                              class="card-img-top" style="height: 260px"/>
                         <div class="card-body">
+                            <h4 class="card-title" th:text="${product.brand}">Product Brand</h4>
                             <h5 class="card-title" th:text="${product.name}">Product Name</h5>
                             <p class="card-text" th:text="${product.productTypeName}">Type</p>
                             <p class="card-text"><span class="price" data-id="price-${product.id}" th:text="${product.price}">0.00</span></p>

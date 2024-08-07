@@ -46,7 +46,7 @@ public class UserController {
     @GetMapping("/register")
     public String viewRegister() {
         if (currentUserDetails.isAuthenticated()) {
-            return "index";
+            return "redirect:/";
         }
         return "register";
     }
@@ -58,7 +58,7 @@ public class UserController {
                              RedirectAttributes redirectAttributes
     ) {
         if (currentUserDetails.isAuthenticated()) {
-            return "index";
+            return "redirect:/";
         }
 
         if (bindingResult.hasErrors()) {
@@ -91,7 +91,7 @@ public class UserController {
     @GetMapping("/login")
     public String viewLogin() {
         if (currentUserDetails.isAuthenticated()) {
-            return "index";
+            return "redirect:/";
         }
         return "login";
     }
@@ -99,7 +99,7 @@ public class UserController {
     @GetMapping("/login-error")
     public String viewLoginError(Model model) {
         if (currentUserDetails.isAuthenticated()) {
-            return "index";
+            return "redirect:/";
         }
 
         model.addAttribute("hasError", true);

@@ -10,6 +10,7 @@ import com.softuni.perfumes_shop.model.entity.User;
 import com.softuni.perfumes_shop.model.enums.UserRole;
 import com.softuni.perfumes_shop.repository.RoleRepository;
 import com.softuni.perfumes_shop.repository.UserRepository;
+import com.softuni.perfumes_shop.service.JwtService;
 import com.softuni.perfumes_shop.service.UserService;
 import com.softuni.perfumes_shop.service.session.CurrentUserDetails;
 import jakarta.persistence.NonUniqueResultException;
@@ -56,6 +57,9 @@ public class UserServiceImplIT {
 
     @MockBean
     private HttpServletResponse response;
+
+    @MockBean
+    private JwtService jwtService;
 
     private UserRegisterDTO userRegisterDTO;
 

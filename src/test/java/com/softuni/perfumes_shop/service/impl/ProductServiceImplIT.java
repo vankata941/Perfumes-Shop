@@ -5,9 +5,11 @@ import com.softuni.perfumes_shop.model.dto.inbound.AddProductDTO;
 import com.softuni.perfumes_shop.model.dto.outbound.ViewProductDTO;
 import com.softuni.perfumes_shop.model.entity.Product;
 import com.softuni.perfumes_shop.model.entity.Type;
+import com.softuni.perfumes_shop.model.enums.Gender;
 import com.softuni.perfumes_shop.model.enums.ProductType;
 import com.softuni.perfumes_shop.repository.ProductRepository;
 import com.softuni.perfumes_shop.repository.TypeRepository;
+import com.softuni.perfumes_shop.service.JwtService;
 import com.softuni.perfumes_shop.service.ProductService;
 import com.softuni.perfumes_shop.service.exception.ObjectNotFoundException;
 import jakarta.persistence.NonUniqueResultException;
@@ -41,6 +43,9 @@ public class ProductServiceImplIT {
 
     @MockBean
     private Initializer initializer;
+
+    @MockBean
+    private JwtService jwtService;
 
     private AddProductDTO productData;
 
@@ -76,6 +81,7 @@ public class ProductServiceImplIT {
         Assertions.assertEquals(productData.getPrice(), product.getPrice());
         Assertions.assertEquals(productData.getStock(), product.getStock());
         Assertions.assertEquals(productData.getPackaging(), product.getPackaging());
+        Assertions.assertEquals(productData.getGender(), product.getGender().getGender());
         Assertions.assertEquals(productData.getProductTypeName(), product.getType().getProductType().getName());
         Assertions.assertArrayEquals(productData.getImage().getBytes(), product.getImage().getImage());
     }
@@ -114,6 +120,7 @@ public class ProductServiceImplIT {
         Assertions.assertEquals(product.getPrice(), viewProduct.getPrice());
         Assertions.assertEquals(product.isInStock(), viewProduct.isInStock());
         Assertions.assertEquals(product.getPackaging(), viewProduct.getPackaging());
+        Assertions.assertEquals(product.getGender().getGender(), viewProduct.getGender());
         Assertions.assertEquals(product.getType().getProductType().getName(), viewProduct.getProductTypeName());
 
     }
@@ -138,6 +145,7 @@ public class ProductServiceImplIT {
         Assertions.assertEquals(product.getPrice(), viewProduct.getPrice());
         Assertions.assertEquals(product.isInStock(), viewProduct.isInStock());
         Assertions.assertEquals(product.getPackaging(), viewProduct.getPackaging());
+        Assertions.assertEquals(product.getGender().getGender(), viewProduct.getGender());
         Assertions.assertEquals(product.getType().getProductType().getName(), viewProduct.getProductTypeName());
     }
 
@@ -167,6 +175,7 @@ public class ProductServiceImplIT {
         Assertions.assertEquals(product.getPrice(), productById.getPrice());
         Assertions.assertEquals(product.getStock(), productById.getStock());
         Assertions.assertEquals(product.getPackaging(), productById.getPackaging());
+        Assertions.assertEquals(product.getGender(), productById.getGender());
         Assertions.assertEquals(product.getType().getProductType().getName(), productById.getType().getProductType().getName());
         Assertions.assertArrayEquals(product.getImage().getImage(), productById.getImage().getImage());
     }
@@ -210,6 +219,42 @@ public class ProductServiceImplIT {
         Assertions.assertNull(name);
     }
 
+    @Test
+    public void testSearchProductsByName() {
+        productService.addProduct(productData);
+
+        Assertions.assertEquals(1, productRepository.count());
+
+        Optional<Product> optProduct = productRepository.findByName(productData.getName());
+
+        Assertions.assertTrue(optProduct.isPresent());
+
+        Product product = optProduct.get();
+
+        List<ViewProductDTO> searchedProducts = productService.searchProducts(product.getName().substring(0, product.getName().length() / 2));
+
+        Assertions.assertEquals(1L, searchedProducts.size());
+
+    }
+
+    @Test
+    public void testSearchProductsByBrand() {
+        productService.addProduct(productData);
+
+        Assertions.assertEquals(1, productRepository.count());
+
+        Optional<Product> optProduct = productRepository.findByName(productData.getName());
+
+        Assertions.assertTrue(optProduct.isPresent());
+
+        Product product = optProduct.get();
+
+        List<ViewProductDTO> searchedProducts = productService.searchProducts(product.getBrand().substring(0, product.getName().length() / 2));
+
+        Assertions.assertEquals(1L, searchedProducts.size());
+
+    }
+
     private AddProductDTO createProductData() {
         AddProductDTO productData = new AddProductDTO();
         productData.setBrand("testBrand");
@@ -218,6 +263,7 @@ public class ProductServiceImplIT {
         productData.setPrice(new BigDecimal("3.00"));
         productData.setStock(5);
         productData.setPackaging("80");
+        productData.setGender(Gender.FEMALE.getGender());
         productData.setProductTypeName("Perfume");
         productData.setImage(new MockMultipartFile("testImage", "testImage.jpg", "image/jpeg", "image/jpeg".getBytes()));
         return productData;

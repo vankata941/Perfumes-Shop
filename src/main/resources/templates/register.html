@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
->
+      xmlns:>
 
 <head th:replace="~{commons/head::head}"></head>
 
@@ -48,7 +48,7 @@
                         class="form-control"
                         id="floatingEmail"
                         placeholder="Email"
-                        pattern="^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
+                        pattern="^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$"
                         required
                 >
                 <small class="invalid-feedback danger" th:text="#{valid_email}">
@@ -110,8 +110,8 @@
                         maxlength="20"
                         required
                 >
-                <small class="invalid-feedback danger" th:text="#{password_length}">
-                    Password length must be between 8 and 20 characters!
+                <small class="invalid-feedback danger" th:text="#{password_validation}">
+                    Password length must be between 8 and 20 characters, and it should contain at least one uppercase letter, one lowercase letter, a digit and a special symbol!
                 </small>
                 <label for="floatingPassword" th:text="#{placeholder_password}">
                     Password
@@ -129,8 +129,8 @@
                         maxlength="20"
                         required
                 >
-                <small class="invalid-feedback danger" th:text="#{password_length}">
-                    Password length must be between 8 and 20 characters!
+                <small class="invalid-feedback danger" th:text="#{password_validation}">
+                    Password length must be between 8 and 20 characters, and it should contain at least one uppercase letter, one lowercase letter, a digit and a special symbol!
                 </small>
                 <label for="floatingConfirmPassword" th:text="#{placeholder_confirm_password}">
                     Confirm password

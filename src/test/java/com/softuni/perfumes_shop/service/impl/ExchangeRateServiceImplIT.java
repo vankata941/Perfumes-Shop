@@ -10,6 +10,7 @@ import com.softuni.perfumes_shop.model.dto.inbound.ExchangeRatesDTO;
 import com.softuni.perfumes_shop.model.entity.ExchangeRate;
 import com.softuni.perfumes_shop.repository.ExchangeRateRepository;
 import com.softuni.perfumes_shop.service.ExchangeRateService;
+import com.softuni.perfumes_shop.service.JwtService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,6 +45,9 @@ public class ExchangeRateServiceImplIT {
 
     @MockBean
     private Initializer initializer;
+
+    @MockBean
+    private JwtService jwtService;
 
 
     @BeforeEach

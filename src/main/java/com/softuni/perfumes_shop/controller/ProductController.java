@@ -80,7 +80,7 @@ public class ProductController {
             return "redirect:/products/add";
         }
 
-        return "index";
+        return "redirect:/";
     }
 
     @GetMapping("/all")
